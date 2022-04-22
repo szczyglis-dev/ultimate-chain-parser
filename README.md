@@ -73,7 +73,7 @@ same director
 **Ugly, right? Ultimate Chain Parser can transform such inconsistently arranged data into a structured, CSV-liked format:**
 
 ```
-123,terminator,schwarzeneger,action movie very good
+123,terminator,schwarzenegger,action movie very good
 456,titanic,dicaprio,same director
 ```
 
