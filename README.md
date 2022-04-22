@@ -41,7 +41,7 @@ composer require szczyglis/ultimate-chain-parser
 
 # Requirements:
 
-  - PHP 7.2.5
+  - PHP 7.2.5+
   - Composer - https://getcomposer.org/
 
 
