@@ -1605,7 +1605,7 @@ $parser->renderLog(); // will display dumped output from your renderer
 
 ## Exporting configuration
 
-You can export the current parser configuration at any time, including the entire chain and its options.
+You can export the currently running configuration at any time, including the entire chain and its options.
 To do this, use the config generator:
 
 ```php
