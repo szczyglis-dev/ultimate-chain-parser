@@ -323,7 +323,7 @@ The main tool of the application, used to parse data according to specific patte
 
   *Example (text):*
 
-    id,name,actor,description
+    id,title,actor,description
 
   *Example (array):*
   ```php
@@ -340,7 +340,7 @@ The main tool of the application, used to parse data according to specific patte
 
   *Example (text):*
 
-    id,name,actor,description
+    id,title,actor,description
 
   *Example (array):*
   ```php
