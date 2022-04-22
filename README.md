@@ -3,7 +3,7 @@
 
 PHP 7.2.5+, current release: **1.0.0** build 2022-04-22
 
-**"Ultimate Chain Parser" is a modular package for chaining processing text data and converting it into a structured output.
+**"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
 
 **Install now using composer:**
