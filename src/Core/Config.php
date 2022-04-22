@@ -14,7 +14,7 @@ class Config
     const WEB_URL = 'https://szczyglis.dev/ultimate-chain-parser';
     const IS_DEMO_MODE = false;
     const DEMO_MODE_INPUT_LIMIT = 10000;
-    const DEMO_MODE_OPTION_LIMIT = 50;
+    const DEMO_MODE_OPTION_LIMIT = 10000;
     const DEMO_MODE_CHAIN_LENGTH_LIMIT = 30;
 
     /**
