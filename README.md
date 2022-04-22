@@ -152,6 +152,7 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
 The above code adds 4 new elements (iterations) with defined tools (named Plugins) to the chain.
 Each of these elements will operate on the output of the previous element.
 The options are passed as the second argument, wrapped in the option provider class.
+Elements do not have to be added manually as above. For this purpose, you can use a predefined, prepared configuration that will build the defined chain itself in a completely programmatic way.
 
 
 ## Configuration, options and usage
