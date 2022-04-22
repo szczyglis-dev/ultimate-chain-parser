@@ -19,24 +19,27 @@ class BlocksWorker extends AbstractWorker implements WorkerInterface, LoggableWo
      */
     public function removeEmpty(array $dataset)
     {
-        $result = [];
-        foreach ($dataset as $i => $rowset) {
-            $rows = [];
+        $tmp = [];
+        foreach ($dataset as $i => $rowset) {            
+            $tmpRows = [];
             foreach ($rowset as $j => $row) {
+                $tmpRow = [];
                 foreach ($row as $k => $col) {
                     if (!empty(TextTools::trim($col))) {
-                        $result[$i][$j][$k] = $col;
+                        $tmpRow[] = $col;
                     } else {
                         $this->log(sprintf('Removing empty column [%u => %u => %u]', $i, $j, $k));
                     }                   
                 }
-                if (empty($result[$i][$j])) {
-                    $this->log(sprintf('Removing empty row [%u => %u]', $i, $j));
-                    unset($result[$i][$j]);
-                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }            
             }
-        }        
-        return $result;
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
     }
 
     public function fixLines(array $dataset)

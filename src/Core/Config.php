@@ -85,7 +85,7 @@ class Config
                 'value' => '1',
                 'placeholder' => '',
                 'label' => '',
-                'help' => 'Use previous output dataset as input dataset (if disabled then previous parsed output will be used as input)',
+                'help' => 'Use previous output dataset as current dataset (if disabled then previous parsed output will be used as current input)',
                 'example' => '',
                 'syntax' => '',
             ],
@@ -493,6 +493,7 @@ class Config
         ];
 
         $options['cleaner'] = array_merge($options['cleaner'], $separator, $dataset);
+        $options['parser'] = array_merge($options['parser'], $separator, $dataset);
 
         return $options;
     }

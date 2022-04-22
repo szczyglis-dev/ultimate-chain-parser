@@ -570,6 +570,7 @@ same director
         <?php echo $html->controls(); ?>
         <div class="row plugin-body">
             <div class="col">
+                <?php echo $html->options('parser', 'io'); ?>
                 <div class="row">
                     <div class="col-lg-4">
                         <?php echo $html->option('parser', 'regex_match'); ?>
