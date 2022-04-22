@@ -1,7 +1,7 @@
 
 # Ultimate Chain Parser - advanced chain-flow based parser
 
-PHP 7.2.5+, current release: **1.0.2** build 2022-04-22
+PHP 7.2.5+, current release: **1.0.3** build 2022-04-22
 
 **"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
@@ -475,7 +475,7 @@ A tool for removing batches of data from text according to specific patterns and
         'to' => null,
       ],
       4 => [
-        'from' => nul,
+        'from' => null,
         'to' => 20,
       ],
     ];
@@ -532,7 +532,7 @@ A tool for limiting the amount of generated or received data according to specif
         'to' => null,
       ],
       4 => [
-        'from' => nul,
+        'from' => null,
         'to' => 20,
       ],
     ];
@@ -634,7 +634,7 @@ A tool for converting specific batches of data to others according to specific p
         'to' => null,
       ],
       4 => [
-        'from' => nul,
+        'from' => null,
         'to' => 20,
       ],
     ];
@@ -1624,6 +1624,8 @@ ___
 **- 1.0.1** - Updated documentation. (2022-04-22)
 
 **- 1.0.2** - Updated configuration. (2022-04-22)
+
+**- 1.0.3** - Some fixes in description. (2022-04-22)
 
 # Credits
  
