@@ -196,7 +196,7 @@ The main tool of the application, used to parse data according to specific patte
 
   *Example (array):*
   ```php
-    $options['regex_ignore'] = [
+    $options['regex_ignore_before'] = [
       0 => '/^XYZ+$/',
       1 => '/^some unwanted data/',
     ];
@@ -212,7 +212,7 @@ The main tool of the application, used to parse data according to specific patte
 
   *Example (array):*
   ```php
-    $options['regex_ignore'] = [
+    $options['regex_ignore_after'] = [
       0 => '/^XYZ+$/',
       1 => '/^some unwanted data/',
     ];
