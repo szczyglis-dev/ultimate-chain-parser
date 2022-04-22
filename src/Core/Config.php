@@ -8,7 +8,7 @@ namespace Szczyglis\ChainParser\Core;
  */
 class Config
 {
-    const VERSION = '1.0.0';
+    const VERSION = '1.0.2';
     const BUILD = '2022-04-21';
     const GITHUB_URL = 'https://github.com/szczyglis-dev/ultimate-chain-parser';
     const WEB_URL = 'https://szczyglis.dev/ultimate-chain-parser';
