@@ -10,13 +10,13 @@ The concept of application is based on processing in subsequent iterations using
 ```
 composer require szczyglis/ultimate-chain-parser
 ``` 
-**For which purposes the Ultimate Chain Parser can be used:**
+**For which purposes the Ultimate Chain Parser can be used?**
 
 - processing to standarized format (e.g. CSV) any data broken into inconsistent rows or columns
 - reparsing data according to a specific complex patterns
 - creating datasets easy-to-put in the database or to import into software like Excel.
 - complex text manipulation
-- and many other.
+- ...and for many other tasks.
 
 ## Live Demo: https://szczyglis.dev/ultimate-chain-parser
 
