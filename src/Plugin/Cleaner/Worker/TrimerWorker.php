@@ -16,10 +16,12 @@ class TrimerWorker extends AbstractWorker implements WorkerInterface, LoggableWo
     /**
      * @param array $data
      */
-    public function trim(array &$data)
+    public function trim(array $dataset)
     {
-        foreach ($data as $i => $block) {
-            $data[$i] = TextTools::trim($block);
-        }
+        $callback = function($data) {
+            return TextTools::trim($data);
+        };
+
+        return $this->onDataset($dataset, $callback);
     }
 }

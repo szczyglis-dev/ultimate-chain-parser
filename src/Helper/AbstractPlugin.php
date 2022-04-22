@@ -10,4 +10,6 @@ abstract class AbstractPlugin
 {
     use Traits\DataTrait;
     use Traits\LoggerTrait;
+    use Traits\DatasetTrait;
+    use Traits\FlowTrait;
 }

@@ -10,4 +10,5 @@ abstract class AbstractWorker
 {
     use Traits\DataTrait;
     use Traits\WorkerLoggerTrait;
+    use Traits\DatasetTrait;
 }

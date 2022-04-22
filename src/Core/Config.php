@@ -8,11 +8,11 @@ namespace Szczyglis\ChainParser\Core;
  */
 class Config
 {
-    const VERSION = '1.0.4';
+    const VERSION = '1.1.0';
     const BUILD = '2022-04-22';
     const GITHUB_URL = 'https://github.com/szczyglis-dev/ultimate-chain-parser';
     const WEB_URL = 'https://szczyglis.dev/ultimate-chain-parser';
-    const IS_DEMO_MODE = true;
+    const IS_DEMO_MODE = false;
     const DEMO_MODE_INPUT_LIMIT = 100000;
     const DEMO_MODE_OPTION_LIMIT = 10000;
     const DEMO_MODE_CHAIN_LENGTH_LIMIT = 30;
@@ -22,7 +22,76 @@ class Config
      */
     public static function getOptions()
     {
-        return [
+        $separator = [
+            'sep_input_rowset' => [
+                'type' => 'i',
+                'value' => '\n',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Separator input rowset: \n = newline',
+                'example' => '',
+                'syntax' => '',
+            ],
+            'sep_input_row' => [
+                'type' => 'i',
+                'value' => '\n',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Separator input row: \n = newline',
+                'example' => '',
+                'syntax' => '',
+            ],
+            'sep_input_col' => [
+                'type' => 'i',
+                'value' => '',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Separator input col: \n = newline',
+                'example' => '',
+                'syntax' => '',
+            ],
+            'sep_output_rowset' => [
+                'type' => 'i',
+                'value' => '\n',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Separator output rowset: \n = newline',
+                'example' => '',
+                'syntax' => '',
+            ],
+            'sep_output_row' => [
+                'type' => 'i',
+                'value' => '\n',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Separator output row: \n = newline',
+                'example' => '',
+                'syntax' => '',
+            ],
+            'sep_output_col' => [
+                'type' => 'i',
+                'value' => '',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Separator output col: \n = newline',
+                'example' => '',
+                'syntax' => '',
+            ],
+        ];
+
+        $dataset = [
+            'use_dataset' => [
+                'type' => 'c',
+                'value' => '1',
+                'placeholder' => '',
+                'label' => '',
+                'help' => 'Use previous output dataset as input dataset (if disabled then previous parsed output will be used as input)',
+                'example' => '',
+                'syntax' => '',
+            ],
+        ];
+
+        $options = [
             'parser' => [
                 'regex_match' => [
                     'type' => 't',
@@ -267,24 +336,6 @@ class Config
                     'syntax' => '',
                     'checked' => true,
                 ],
-                'input_separator' => [
-                    'type' => 'i',
-                    'value' => '\n',
-                    'placeholder' => '',
-                    'label' => '',
-                    'help' => 'Separator used to explode input into blocks, default: \n = new line',
-                    'example' => '',
-                    'syntax' => '',
-                ],
-                'output_separator' => [
-                    'type' => 'i',
-                    'value' => '\n',
-                    'placeholder' => '',
-                    'label' => '',
-                    'help' => 'Separator used to join blocks in output, default: \n = new line',
-                    'example' => '',
-                    'syntax' => '',
-                ],
             ],
 
             'eraser' => [
@@ -440,5 +491,9 @@ class Config
                 ],
             ],
         ];
+
+        $options['cleaner'] = array_merge($options['cleaner'], $separator, $dataset);
+
+        return $options;
     }
 }

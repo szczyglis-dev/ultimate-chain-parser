@@ -236,6 +236,41 @@ class Html
         }
     }
 
+    public function options($plugin, $name)
+    {
+        $html = '';
+
+        switch ($name) {
+            case 'io':
+                $html = '
+                    <div class="col-12">
+                        <div class="mt-3">
+                            <b>INPUT / OUTPUT</b>                  
+                        </div>    
+                        <div class="row">
+                            <div class="col">
+                                '.$this->option($plugin, 'use_dataset').'
+                            </div>
+                        </div>            
+                        <div class="row">
+                            <div class="col-md-6">
+                                '.$this->option($plugin, 'sep_input_rowset').'
+                                '.$this->option($plugin, 'sep_input_row').'
+                                '.$this->option($plugin, 'sep_input_col').'
+                            </div>
+                            <div class="col-md-6">
+                                '.$this->option($plugin, 'sep_output_rowset').'
+                                '.$this->option($plugin, 'sep_output_row').'
+                                '.$this->option($plugin, 'sep_output_col').'
+                            </div>
+                        </div>                
+                    </div>';
+                break;
+        }  
+
+        return $html;      
+    }
+
     /**
      * @param string $key
      * @param array $option

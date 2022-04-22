@@ -28,7 +28,7 @@ class Chain
     public function run(): self
     {
         $prevOutput = $this->input->read();
-        $prevData = [];
+        $prevDataset = [];
 
         foreach ($this->loggers as $logger) {
             $logger->onBegin();
@@ -42,8 +42,8 @@ class Chain
             // initialize data
             $data = new DataBag;
             $data->setElement($element);
-            $data->setPrev('input', $prevOutput);
-            $data->setPrev('data', $prevData);
+            $data->setPrev('output', $prevOutput);
+            $data->setPrev('dataset', $prevDataset);
             $data->set('input', $this->input);
             $data->set('outputs', $this->output);
 
@@ -88,10 +88,12 @@ class Chain
                 }
 
                 $plugin->setData($data);
+                $plugin->init();
                 $plugin->run();
+                $plugin->end();
 
                 $prevOutput = $data->get('output');
-                $prevData = $data->get('data');
+                $prevDataset = $data->get('dataset');
 
                 if ($plugin instanceof LoggableInterface) {
                     foreach ($this->loggers as $logger) {

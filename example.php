@@ -624,14 +624,13 @@ same director
         <div class="row plugin-body">
             <div class="col-md-6">
                 <?php echo $html->option('cleaner', 'trim'); ?>
-                <?php echo $html->option('cleaner', 'clean_blocks'); ?>
+                <?php echo $html->option('cleaner', 'clean_blocks'); ?>                
+            </div>
+            <div class="col-md-6">
                 <?php echo $html->option('cleaner', 'fix_newlines'); ?>
                 <?php echo $html->option('cleaner', 'strip_tags'); ?>
             </div>
-            <div class="col-md-6">
-                <?php echo $html->option('cleaner', 'input_separator'); ?>
-                <?php echo $html->option('cleaner', 'output_separator'); ?>
-            </div>
+            <?php echo $html->options('cleaner', 'io'); ?>
         </div>
     </div>
 </div>
@@ -992,7 +991,9 @@ same director
     }
 
     window.onbeforeunload = function () {
+        <?php if ($html->isDemoMode()) { ?>
         return "Data in forms will be lost if you leave the page, are you sure?";
+        <?php } ?>
     };
 </script>
 </body>

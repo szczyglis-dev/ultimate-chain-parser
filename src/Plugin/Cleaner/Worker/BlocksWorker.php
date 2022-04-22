@@ -17,26 +17,34 @@ class BlocksWorker extends AbstractWorker implements WorkerInterface, LoggableWo
      * @param array $data
      * @return array
      */
-    public function cleanEmpty(array &$data)
+    public function removeEmpty(array $dataset)
     {
         $result = [];
-        $c = count($data) - 1;
-        foreach ($data as $i => $block) {
-            if (!empty(TextTools::trim($block))) {
-                $result[] = $block;
-            } else {
-                $this->log(sprintf('Removing empty block [%u / %u]', $i, $c));
+        foreach ($dataset as $i => $rowset) {
+            $rows = [];
+            foreach ($rowset as $j => $row) {
+                foreach ($row as $k => $col) {
+                    if (!empty(TextTools::trim($col))) {
+                        $result[$i][$j][$k] = $col;
+                    } else {
+                        $this->log(sprintf('Removing empty column [%u => %u => %u]', $i, $j, $k));
+                    }                   
+                }
+                if (empty($result[$i][$j])) {
+                    $this->log(sprintf('Removing empty row [%u => %u]', $i, $j));
+                    unset($result[$i][$j]);
+                }
             }
-        }
+        }        
         return $result;
     }
 
-    /**
-     * @param string $data
-     * @return string|string[]
-     */
-    public function fixNewLines(string &$data)
+    public function fixLines(array $dataset)
     {
-        return TextTools::strReplace("\r\n", "\n", $data);
-    }
+        $callback = function($data) {
+            return TextTools::strReplace("\r", "", $data);
+        };
+
+        return $this->onDataset($dataset, $callback);
+    }    
 }

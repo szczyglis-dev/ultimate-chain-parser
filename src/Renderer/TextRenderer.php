@@ -54,14 +54,14 @@ class TextRenderer extends AbstractRenderer implements RendererInterface
             }
             $res = [];
             foreach ($this->output as $item) {
-                $res[] = json_encode($item->get('data'), JSON_PRETTY_PRINT);
+                $res[] = json_encode($item->get('dataset'), JSON_PRETTY_PRINT);
             }
             return implode($delimiter, $res);
 
         } else {
             $k = array_key_last($this->output);
             if (!empty($this->output[$k])) {
-                return json_encode($this->output[$k]->get('data'), JSON_PRETTY_PRINT);
+                return json_encode($this->output[$k]->get('dataset'), JSON_PRETTY_PRINT);
             }
         }
     }
