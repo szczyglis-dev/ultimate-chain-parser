@@ -224,19 +224,27 @@ The main tool of the application, used to parse data according to specific patte
   *Example (text):*
 
     id:/^[\d]+$/ => 12345
-    name:/^([^\d])+/ => $1
+    name:/^([^\d]+)/ => $1
 
   *Example (array):*
   ```php
     $options['replace_field_before'] = [
       'id' => [
-        'pattern' => '/^[\d]+$/',
-        'replacement' => '12345',
-      ]
+        0 => [
+          'pattern' => '/^[\d]+$/',
+          'replacement' => '12345',
+        ],        
+      ],
       'name' => [
-        'pattern' => '/^([^\d])+/',
-        'replacement' => '$1',
-      ]
+        0 => [
+          'pattern' => '/^([^\d]+)/',
+          'replacement' => '$1',
+        ], 
+        1 => [
+          'pattern' => '/^([A-Z]+)/',
+          'replacement' => 'abc$1',
+        ],        
+      ],
     ];
   ``` 
 **- replace_field_after** - A list of regular expressions to replace an already matched field with another text string. It can be used for post-processing of already matched fields. You can enter many, in text form each expression on a new line, or directly in the array.
@@ -246,18 +254,22 @@ The main tool of the application, used to parse data according to specific patte
   *Example (text):*
 
     id:/^[\d]+$/ => 12345
-    name:/^([^\d])+/ => $1
+    name:/^([^\d]+)/ => $1
 
   *Example (array):*
   ```php
     $options['replace_field_after'] = [
       'id' => [
-        'pattern' => '/^[\d]+$/',
-        'replacement' => '12345',
-      ]
+        0 => [
+          'pattern' => '/^[\d]+$/',
+          'replacement' => '12345',
+        ],        
+      ],
       'name' => [
-        'pattern' => '/^([^\d])+/',
-        'replacement' => '$1',
+        0 => [
+          'pattern' => '/^([^\d]+)/',
+          'replacement' => '$1',
+        ],        
       ],
     ];
 ```
@@ -268,7 +280,7 @@ The main tool of the application, used to parse data according to specific patte
   *Example (text):*
 
     /^[\d]+$/ => 12345
-    /^([^\d])+/ => $1
+    /^([^\d]+)/ => $1
 
   *Example (array):*
   ```php
@@ -278,7 +290,7 @@ The main tool of the application, used to parse data according to specific patte
         'replacement' => '12345',
       ]
       1 => [
-        'pattern' => '/^([^\d])+/',
+        'pattern' => '/^([^\d]+)/',
         'replacement' => '$1',
       ],
     ];
@@ -290,7 +302,7 @@ The main tool of the application, used to parse data according to specific patte
   *Example (text):*
 
     /^[\d]+$/ => 12345
-    /^([^\d])+/ => $1
+    /^([^\d]+)/ => $1
 
   *Example (array):*
   ```php
@@ -300,7 +312,7 @@ The main tool of the application, used to parse data according to specific patte
         'replacement' => '12345',
       ]
       1 => [
-        'pattern' => '/^([^\d])+/',
+        'pattern' => '/^([^\d]+)/',
         'replacement' => '$1',
       ],
     ];
@@ -561,7 +573,7 @@ A tool for converting specific batches of data to others according to specific p
   *Example (text):*
 
     /^[\d]+$/ => 12345
-    /^([^\d])+/ => $1
+    /^([^\d]+)/ => $1
 
   *Example (array):*
   ```php
@@ -571,7 +583,7 @@ A tool for converting specific batches of data to others according to specific p
         'replacement' => '12345',
       ]
       1 => [
-        'pattern' => '/^([^\d])+/',
+        'pattern' => '/^([^\d]+)/',
         'replacement' => '$1',
       ],
     ];
@@ -583,7 +595,7 @@ A tool for converting specific batches of data to others according to specific p
   *Example (text):*
 
     /^[\d]+$/ => 12345
-    /^([^\d])+/ => $1
+    /^([^\d]+)/ => $1
 
   *Example (array):*
   ```php
@@ -593,7 +605,7 @@ A tool for converting specific batches of data to others according to specific p
         'replacement' => '12345',
       ]
       1 => [
-        'pattern' => '/^([^\d])+/',
+        'pattern' => '/^([^\d]+)/',
         'replacement' => '$1',
       ],
     ];
