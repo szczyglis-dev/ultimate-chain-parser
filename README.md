@@ -1553,7 +1553,7 @@ class MyRenderer extends AbstractRenderer implements RendererInterface
       $loggers = $item->getLog();
       foreach ($loggers as $lines) {
         foreach ($lines as $line) {
-          dump(($line);
+          dump($line);
         }       
       }
     }
