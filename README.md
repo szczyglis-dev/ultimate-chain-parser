@@ -908,7 +908,6 @@ ___
 ## Input data providers
 
 Input data providers are responsible for reading input data.
-
 There are a few base input data providers included in the package, but you can create yours very easily.
 
 Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
