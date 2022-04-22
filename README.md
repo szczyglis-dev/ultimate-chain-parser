@@ -1217,8 +1217,8 @@ ___
 
 ## Plugins
 
-Plugins are the core of an application.
-They are "processes" that run along the chain and operate on data.
+Plugins are the core of the application.
+They are tools that run along the chain and operates on data.
 Each plugin can work with the raw input and output from the previous plugin made in the chain.
 There are also special classes called `Workers` that help you organize your code and break it down into different "subprocesses". Workers share the same data set as the main plugin, they can also quickly exchange their data with the plugin. You can easily register your own workers using the `registerWorker` method.
 
