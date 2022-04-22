@@ -226,6 +226,7 @@ The main tool of the application, used to parse data according to specific patte
 
     id:/^[\d]+$/ => 12345
     name:/^([^\d]+)/ => $1
+    name:/^([A-Z]+)/ => abc$1
 
   *Example (array):*
   ```php
