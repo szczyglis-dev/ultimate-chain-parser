@@ -8,7 +8,7 @@ namespace Szczyglis\ChainParser\Core;
  */
 class Config
 {
-    const VERSION = '1.0.2';
+    const VERSION = '1.0.3';
     const BUILD = '2022-04-22';
     const GITHUB_URL = 'https://github.com/szczyglis-dev/ultimate-chain-parser';
     const WEB_URL = 'https://szczyglis.dev/ultimate-chain-parser';
@@ -57,7 +57,7 @@ class Config
                     'placeholder' => '',
                     'label' => '',
                     'help' => ' A list of regular expressions used to replace or precondition a data block with another, run before each attempt to match a given field. Can be used to pre-filter the data before each match attempt. You can add more than one replace pattern for each field in separate lines.',
-                    'example' => 'id:/^[\d]+$/<br/>name:/^([^\d])+/ => $1<br/>name:/^([\d])+$/ => "another for same field"',
+                    'example' => 'id:/^[\d]+$/<br/>name:/^([^\d]+)/ => $1<br/>name:/^([\d])+$/ => "another for same field"',
                     'syntax' => 'FIELDNAME:/REGEX/ => "REPLACED STRING" (per line)',
                 ],
                 'replace_field_after' => [
@@ -66,7 +66,7 @@ class Config
                     'placeholder' => '',
                     'label' => '',
                     'help' => ' A list of regular expressions to replace an already matched field with another text string. It can be used for post-processing of already matched fields. You can add more than one replace pattern for each field in separate lines.',
-                    'example' => 'id:/^[\d]+$/<br/>name:/^([^\d])+/ => $1',
+                    'example' => 'id:/^[\d]+$/<br/>name:/^([^\d]+)/ => $1',
                     'syntax' => 'FIELDNAME:/REGEX/ => "REPLACED STRING" (per line)',
                 ],
                 'replace_block_before' => [
@@ -75,7 +75,7 @@ class Config
                     'placeholder' => '',
                     'label' => '',
                     'help' => ' A list of regular expressions to replace or pre-prepare a data block with another, run over the entire data block before trying to match. Can be used to pre-filter the data before each match attempt. You can add more than one replace pattern in separate lines.',
-                    'example' => '/^[\d]+$/<br/>/^([^\d])+/ => $1',
+                    'example' => '/^[\d]+$/<br/>/^([^\d]+)/ => $1',
                     'syntax' => '/REGEX/ => "REPLACED STRING" (per line)',
                 ],
                 'replace_block_after' => [
@@ -84,7 +84,7 @@ class Config
                     'placeholder' => '',
                     'label' => '',
                     'help' => 'A list of regular expressions to replace an already matched block with another text string. Run for the entire block of data after a match is made. Can be used for post-processing of already matched data. You can add more than one replace pattern in separate lines.',
-                    'example' => '/^[\d]+$/<br/>/^([^\d])+/ => $1',
+                    'example' => '/^[\d]+$/<br/>/^([^\d]+)/ => $1',
                     'syntax' => '/REGEX/ => "REPLACED STRING" (per line)',
                 ],
                 'empty_field_placeholder' => [
