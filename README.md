@@ -921,7 +921,7 @@ Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
 ### How to create your own input data provider:
 
 - implement interface `Szczyglis\ChainParser\Contract\InputInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helpers\AbstractInput`
+- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractInput`
 - attach your input data provider using the `setInput()` method
 
 
@@ -990,7 +990,7 @@ Loggers are located in: `Szczyglis\ChainParser\Logger` namespace.
 ### How to create your own logger:
 
 - implement interface `Szczyglis\ChainParser\Contract\LoggerInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helpers\AbstractLogger`
+- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractLogger`
 - add logger using the `addLogger()` method
 
 
@@ -1054,7 +1054,7 @@ Options provider are located in: `Szczyglis\ChainParser\Options` namespace.
 ### How to create your own options provider:
 
 - implement interface `Szczyglis\ChainParser\Contract\OptionsInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helpers\AbstractOptions`
+- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractOptions`
 - initialize plugin using your own options provider
 
 
@@ -1241,7 +1241,7 @@ Plugins are located in `Szczyglis\ChainParser\Plugin` namespace.
 ### How to create your own plugin:
 
 - implement interface `Szczyglis\ChainParser\Contract\PluginInterface`
-- extend abstract helper class `Szczyglis\ChainParser\Helpers\AbstractPlugin`
+- extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractPlugin`
 - add a plugin to the chain
 
 
@@ -1536,7 +1536,7 @@ Renderers are located in `Szczyglis\ChainParser\Renderer` namespace.
 ### How to create your own renderer:
 
 - implement interface `Szczyglis\ChainParser\Contract\RendererInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helpers\AbstractRenderer`
+- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractRenderer`
 - set renderer using `setRenderer()` method
 
 
