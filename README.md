@@ -129,26 +129,23 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
 **Manualy adding elements to chain is very easy:**
 
 ```php
-  $parser = new ChainParser();
-  
-  $parser->add('cleaner', new ArrayOptions([
-    'option1' => 'value1',
-    'option2' => 'value1',
-  ]); 
-
-  $parser->add('parser', new ArrayOptions([
-    'option1' => 'value2',
-  ]); 
-
-  $parser->add('parser', new ArrayOptions([
-    'option1' => 'value3',
-    'option2' => 'value4',
-  ]); 
-
-  $parser->add('limiter', new ArrayOptions([
-    'option4' => 'value3',
-    'option2' => 'value4',
-  ]); 
+  $parser = new ChainParser();  
+  $parser
+    ->add('cleaner', new ArrayOptions([
+      'option1' => 'value1',
+      'option2' => 'value1',
+    ])
+    ->add('parser', new ArrayOptions([
+      'option1' => 'value2',
+    ])
+    ->add('parser', new ArrayOptions([
+      'option1' => 'value3',
+      'option2' => 'value4',
+    ])
+    ->add('limiter', new ArrayOptions([
+      'option4' => 'value3',
+      'option2' => 'value4',
+    ]); 
   
   $parser->run();
 ```
