@@ -833,7 +833,7 @@ Configuration providers are located in: `Szczyglis\ChainParser\Config` namespace
 ### How to create your own configuration provider:
 
 - implement interface `Szczyglis\ChainParser\Contract\ConfigInterface`
-- attach your config reader using the `setConfig()` method
+- attach your config provider using the `setConfig()` method
 
 
 ### Example:
