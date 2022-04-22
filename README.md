@@ -1,6 +1,5 @@
 
-# Ultimate Chain Parser 
-### Advanced chain-based data parser
+# Ultimate Chain Parser - advanced chain-based parser
 
 PHP 7.2.5+, current release: **1.0.0** build 2022-04-22
 
