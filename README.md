@@ -148,7 +148,7 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
     'option2' => 'value4',
   ]); 
 ```
-The above code adds 4 new elements (iterations) of the "parser" plugin to the chain.
+The above code adds 4 new elements (iterations) with defined plugins to the chain.
 Each of these elements will operate on the output of the previous element.
 The options are passed as the second argument, wrapped in the option provider class.
 
