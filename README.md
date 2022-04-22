@@ -475,7 +475,7 @@ A tool for removing batches of data from text according to specific patterns and
         'to' => null,
       ],
       4 => [
-        'from' => nul,
+        'from' => null,
         'to' => 20,
       ],
     ];
@@ -532,7 +532,7 @@ A tool for limiting the amount of generated or received data according to specif
         'to' => null,
       ],
       4 => [
-        'from' => nul,
+        'from' => null,
         'to' => 20,
       ],
     ];
@@ -634,7 +634,7 @@ A tool for converting specific batches of data to others according to specific p
         'to' => null,
       ],
       4 => [
-        'from' => nul,
+        'from' => null,
         'to' => 20,
       ],
     ];
