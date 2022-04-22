@@ -905,12 +905,12 @@ $parser->renderOutput();
 ___
 
 
-## Input providers
+## Input data providers
 
-Input providers are responsible for reading input data.
+Input data providers are responsible for reading input data.
 There are a few base input providers included in the package, but you can create yours very easily.
 
-Input providers are located in: `Szczyglis\ChainParser\Input` namespace.
+Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
 
 ### Included input providers:
 
@@ -922,7 +922,7 @@ Input providers are located in: `Szczyglis\ChainParser\Input` namespace.
 
 - implement interface `Szczyglis\ChainParser\Contract\InputInterface`
 - optionally extend abstract helper class `Szczyglis\ChainParser\Helpers\AbstractInput`
-- attach input using the `setInput()` method
+- attach your input data provider using the `setInput()` method
 
 
 ### Example:
