@@ -70,7 +70,7 @@ same director
 
 ```
 
-**Ugly, right? Ultimate Chain Parser can transform such inconsistently arranged data into a structured, CSV-liked format:**
+**Ugly, right? Ultimate Chain Parser can transform such inconsistently arranged data into a structured format like CSV, JSON, raw PHP array and any other schema defined easily by user:**
 
 ```
 123,terminator,schwarzenegger,action movie very good
