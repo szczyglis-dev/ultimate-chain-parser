@@ -6,7 +6,7 @@ PHP 7.2.5+, current release: **1.0.0** build 2022-04-22
 **"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
 
-**Install now using composer:**
+**Install with composer:**
 ```
 composer require szczyglis/ultimate-chain-parser
 ``` 
@@ -28,7 +28,7 @@ composer require szczyglis/ultimate-chain-parser
 - parsing bad-arranged or broken data copied from websites, Word documents or PDFs  
 - running pre-configured tools (plugins) in the chain
 - complex manipulation on text data
-- comprehensive data parsing using programmable regular expressions run one after another in a defined sequence
+- complex data parsing using programmable regular expressions run one after another in a defined sequence
 - easy to use and powerful configuration system
 - the flow of action based on the splitting into smaller separate tools, each of which performs a different batch of tasks in cooperation with the rest
 - tools included in the package that can work separately or together: parser, cleaner, limiter, splitter, eraser and replacer
@@ -129,6 +129,8 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
 **Manualy adding elements to chain is very easy:**
 
 ```php
+  $parser = new ChainParser();
+  
   $parser->add('cleaner', new ArrayOptions([
     'option1' => 'value1',
     'option2' => 'value1',
@@ -147,8 +149,10 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
     'option4' => 'value3',
     'option2' => 'value4',
   ]); 
+  
+  $parser->run();
 ```
-The above code adds 4 new elements (iterations) with defined plugins to the chain.
+The above code adds 4 new elements (iterations) with defined tools (named Plugins) to the chain.
 Each of these elements will operate on the output of the previous element.
 The options are passed as the second argument, wrapped in the option provider class.
 
