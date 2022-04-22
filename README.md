@@ -912,7 +912,7 @@ There are a few base input data providers included in the package, but you can c
 
 Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
 
-### Included input providers:
+### Included input data providers:
 
 **TextInput** - reads input data directly from string passed as constructor argument
 
