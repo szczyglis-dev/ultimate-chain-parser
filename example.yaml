@@ -1,0 +1,45 @@
+# Ultimate Chain Parser example Yaml config file
+
+full_output: false
+chain:
+    -
+        plugin: cleaner
+        options:
+            clean_blocks: true
+            fix_newlines: true
+            input_separator: \n
+            output_separator: \n
+            trim: true
+    -
+        plugin: parser
+        options:
+            empty_field_placeholder: ''
+            fields:
+                - id
+                - title
+                - actor
+                - description
+            input_block_interval: true
+            input_block_separator: \n
+            output_field_separator: ','
+            output_fields:
+                - id
+                - title
+                - actor
+                - description
+            output_record_separator: \n
+            regex_ignore_after: {  }
+            regex_ignore_before: {  }
+            regex_match:
+                id:
+                    - '/^[\d]+$/'
+                title:
+                    - '/^[^\d]+/'
+                actor:
+                    - '/^[^\d]+/'
+                0: de
+            replace_block_after: {  }
+            replace_block_before: {  }
+            replace_field_after: {  }
+            replace_field_before: {  }
+            rowset_separator: ''

@@ -1,0 +1,48 @@
+{
+    "name": "szczyglis/ultimate-chain-parser",
+    "description": "A comprehensive modular working in-chain tools for advanced text-data processing and re-parsing",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/szczyglis-dev/ultimate-chain-parser",
+    "config": {
+        "platform": {
+            "php": "7.2.5"
+         }
+     },
+    "keywords": [
+        "text",
+        "parsing",
+        "processing",
+        "data",
+        "replacing",
+        "cleaning",
+        "erasing",
+        "reparsing",
+        "csv",
+        "txt",
+        "chain",
+        "plugin",
+        "batch"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Szczyglis\\ChainParser\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "szczyglis",
+            "email": "szczyglis@protonmail.com",
+            "homepage": "https://szczyglis.dev"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "monolog/monolog": "^2.1",
+        "symfony/console": "^5.1",
+        "symfony/yaml": "^5.1",
+        "symfony/http-foundation": "^5.1",
+        "symfony/var-dumper": "^5.1"
+    }
+}
