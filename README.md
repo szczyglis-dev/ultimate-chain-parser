@@ -1620,8 +1620,7 @@ ___
 
 # Changelog
 
-**- 1.0.1** - First release was published. (2022-04-22)
-
+**- 1.0.1** - Updated documentation. (2022-04-22)
 
 # Credits
  
