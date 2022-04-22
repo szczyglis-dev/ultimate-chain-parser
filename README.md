@@ -830,7 +830,7 @@ Configuration providers are located in: `Szczyglis\ChainParser\Config` namespace
 
 **YamlConfig** - reads configuration from Yaml file (path to file needs to be passed as constructor argument)
 
-### How to create your own configuration parserr:
+### How to create your own configuration provider:
 
 - implement interface `Szczyglis\ChainParser\Contract\ConfigInterface`
 - attach your config reader using the `setConfig()` method
