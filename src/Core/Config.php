@@ -12,8 +12,8 @@ class Config
     const BUILD = '2022-04-22';
     const GITHUB_URL = 'https://github.com/szczyglis-dev/ultimate-chain-parser';
     const WEB_URL = 'https://szczyglis.dev/ultimate-chain-parser';
-    const IS_DEMO_MODE = false;
-    const DEMO_MODE_INPUT_LIMIT = 10000;
+    const IS_DEMO_MODE = true;
+    const DEMO_MODE_INPUT_LIMIT = 100000;
     const DEMO_MODE_OPTION_LIMIT = 10000;
     const DEMO_MODE_CHAIN_LENGTH_LIMIT = 30;
 
