@@ -645,11 +645,13 @@ You can run the command with the script cmd.php:
 **Arguments:**
 
   /path/to/data = path to file with text data to parse.
+  
   /path/to/config.yaml = path to file with Yaml config.
 
 **Options:**
 
   --log=0   - disable log output
+
   --data=0  - disable raw data output
 
 Package contains 2 example files:
