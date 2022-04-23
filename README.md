@@ -1,7 +1,7 @@
 
 # Ultimate Chain Parser - advanced chain-flow based parser
 
-PHP 7.2.5+, current release: **1.2.5** build 2022-04-23
+PHP 7.2.5+, current release: **1.2.6** build 2022-04-23
 
 **"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
@@ -1218,9 +1218,11 @@ class MyPlugin extends AbstractPlugin implements PluginInterface, LoggableInterf
 
   public function run(): bool
   {
-    $data = $this->getPrev('output'); // gets output from the previous element in chain
-    $data = 'Hello '.$data;
-    $this->set('output', $data); // returns the output data and passes it to the next element in the chain
+    $dataset = $this->getDataset(); // get previous data or from input
+
+    // do something with data
+    
+    $this->setDataset($dataset); // return data to next element or to output
 
     return true;
   }
@@ -1641,7 +1643,7 @@ ___
 
 **- 1.0.4** - Increased limit if demo mode, documentation fixes. (2022-04-22)
 
-**- 1.2.5** - Full dataset sharing added, eraser and splitter plugins are removed (their role is taken over by limiter), added configuration of dataset looks by freely specifying each separator for each dimension (rowset, row, column).  (2022-04-23)
+**- 1.2.6** - Full dataset sharing added, eraser and splitter plugins are removed (their role is taken over by limiter), added configuration of dataset looks by freely specifying each separator for each dimension (rowset, row, column).  (2022-04-23)
 
 # Credits
  
