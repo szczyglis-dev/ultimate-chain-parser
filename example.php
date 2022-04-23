@@ -151,7 +151,7 @@ try {
 } catch (\Throwable $e) {
     if ($request->isXmlHttpRequest()) {
         if ($html->isDemoMode()) {
-            echo 'ERROR: Invalid options or/and input. Please try again.';
+            echo 'ERROR: Invalid options or/and incorect input. Please try again.';
         } else {
             echo 'ERROR: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
         }
