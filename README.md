@@ -1,7 +1,7 @@
 
 # Ultimate Chain Parser - advanced chain-flow based parser
 
-PHP 7.2.5+, current release: **1.2.6** build 2022-04-23
+PHP **7.2.5+**, current release: **1.2.6** build 2022-04-23
 
 **"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
@@ -1660,5 +1660,7 @@ or by PayPal:
 MIT License | 2022 Marcin 'szczyglis' Szczygliński
 
 https://github.com/szczyglis-dev/ultimate-chain-parser
+
+https://szczyglis.dev/ultimate-chain-parser
 
 Contact: szczyglis@protonmail.com
