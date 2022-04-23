@@ -25,6 +25,11 @@ class Replacer extends AbstractPlugin implements PluginInterface, LoggableInterf
         $interval = (int)$this->getOption('interval');
         $range = $this->getOption('range');
 
+        if (empty($mode) || !in_array($mode, ['rowset', 'row', 'column'])) {
+            $this->log('Warning: no data_mode specified, using default: column');
+            $mode = 'column';
+        }
+
         $dataset = $this->getDataset();
         $regexWorker = $this->getWorker('regex');
 

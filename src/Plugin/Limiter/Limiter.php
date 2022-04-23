@@ -43,6 +43,11 @@ class Limiter extends AbstractPlugin implements PluginInterface, LoggableInterfa
             $intervalDeny = 1;
         }
 
+        if (empty($mode) || !in_array($mode, ['rowset', 'row', 'column'])) {
+            $this->log('Warning: no data_mode specified, using default: column');
+            $mode = 'column';
+        }
+
         if (!empty($regexAllow)) {
             $this->log(sprintf('Using patterns allow limit: %u pattern(s)', count($regexAllow)));
             $dataset = $regexWorker->limitAllowed($dataset, $regexAllow, $mode);
