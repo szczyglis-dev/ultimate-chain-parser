@@ -98,7 +98,7 @@ class Config
                 'placeholder' => '',
                 'value' => 'column',
                 'label' => '',
-                'help' => 'Select the dimension on which the other options are to operate, it will also affect the form of parsing the data in the table',
+                'help' => 'Select the dimension on which the other options are to operate, it will also affect the form of parsing the data in the dataset',
                 'example' => '',
                 'syntax' => '',
                 'choices' => [

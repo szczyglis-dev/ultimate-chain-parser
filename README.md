@@ -431,6 +431,8 @@ A tool for limiting the amount of generated or received data according to specif
 
 **- use_dataset** - boolean, enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
 
+**- data_mode** - string [rowset|row|column] - selects the dimension on which the other options are to operate, it will also affect the form of parsing the data in the dataset
+
 **- interval_allow** - integer, Restrict output to blocks that match the given interval, default: 1
 
 **- range_allow** - Limit output to blocks that match specified ranges, leave empty to allow all blocks, or specify range(s) separated by coma, indexing is from 0
@@ -543,6 +545,8 @@ A tool for converting specific batches of data to others according to specific p
 **Options:**
 
 **- use_dataset** - boolean, enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element) 
+
+**- data_mode** - string [rowset|row|column] - selects the dimension on which the other options are to operate, it will also affect the form of parsing the data in the dataset
 
 **- regex** - Regular expressions to replace the appropriate strings. You can enter several phrases on new lines.
 
