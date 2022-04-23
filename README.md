@@ -96,7 +96,7 @@ same director
 ]
 ```
 
-The above CSV and JSON data has been generated completely automatically using only a few configuration options given in the parser input. The main concept behind the operation is to run a set of processing tools (called Plugins) in a chain. Each successively started process accesses the output from the previous process in the chain. Each of these chain elements can be freely configured with different options. Configuration can be done in many ways by running Chain Parser directly from your code, loading configuration from an external file and running from command line, or completely live using the Ajax web form-based configurator included in the package.Ultimate Chain Parser can also directly return a ready (not parsed) dataset prepared from analyzed data (in the form of a PHP array or JSON data).
+The above CSV and JSON data has been generated completely automatically using only a few configuration options given in the parser input. The main concept behind the operation is to run a set of processing tools (called Plugins) in a chain. Each successively started process accesses the output from the previous process in the chain. Each of these chain elements can be freely configured with different options. Configuration can be done in many ways by running Chain Parser directly from your code, loading configuration from an external file and running from command line, or completely live using the Ajax web form-based configurator included in the package. Ultimate Chain Parser can also directly return a ready (not parsed) dataset prepared from analyzed data (in the form of a PHP array or JSON data).
 
 
 # Installation:
