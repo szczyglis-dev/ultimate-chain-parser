@@ -14,14 +14,15 @@ use Szczyglis\ChainParser\Helper\TextTools;
 class TrimerWorker extends AbstractWorker implements WorkerInterface, LoggableWorkerInterface
 {
     /**
-     * @param array $data
+     * @param array $dataset
+     * @return array
      */
-    public function trim(array $dataset)
+    public function applyTrim(array $dataset)
     {
-        $callback = function($data) {
-            return TextTools::trim($data);
+        $callback = function ($data) {
+            return $this->trim($data);
         };
 
-        return $this->onDataset($dataset, $callback);
+        return $this->iterateDataset($dataset, $callback);
     }
 }

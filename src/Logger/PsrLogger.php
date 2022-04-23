@@ -17,7 +17,7 @@ class PsrLogger extends AbstractLogger implements LoggerInterface
     const NAME = 'psr-logger';
 
     const LOG_FILE_PATH_DEFAULT = 'debug.log';
-    const LOG_FILE_PATH_CONFIG_KEY = 'logfile';
+    const LOG_FILE_PATH_CONFIG_KEY = 'log_file';
 
     private static $instance = null;
     private $logger;
@@ -102,6 +102,10 @@ class PsrLogger extends AbstractLogger implements LoggerInterface
      */
     public function addMessage(string $message, array $additionalData = []): void
     {
+        if ($this->isDisabled()) {
+            return;
+        }
+
         $msg = $this->prefix() . $message;
         $logger = self::getLogger();
         if (!is_null($logger)) {

@@ -29,8 +29,12 @@ class ArrayLogger extends AbstractLogger implements LoggerInterface
      * @param string $message
      * @param array $additionalData
      */
-    public function addMessage(string $message, array $additionalData = []): void
+    public function addMessage(string $message, array $additionalData = [])
     {
+        if ($this->isDisabled()) {
+            return;
+        }
+
         $this->logs[] = $this->prefix() . $message;
     }
 

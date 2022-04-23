@@ -15,76 +15,63 @@ class Limiter extends AbstractPlugin implements PluginInterface, LoggableInterfa
 {
     const NAME = 'limiter';
 
-    private $output = [];
-    private $result;
-    private $input;
-
     /**
      * @return bool
      */
     public function run(): bool
     {
-        $this->input = TextTools::prepareInput($this->getPrev('input'));
+        $dataset = $this->getDataset();
+        $mode = $this->getOption('data_mode');
 
-        $sepInput = TextTools::prepareSeparator($this->getOption('input_separator'));
-        $sepOutput = TextTools::prepareSeparator($this->getOption('output_separator'));
-        $regexAllowed = $this->getOption('regex_allowed');
-        $interval = (int)$this->getOption('interval');
-        $range = $this->getOption('range');
+        $mode = $this->getOption('data_mode');
+        $regexAllow = $this->getOption('regex_allow');
+        $intervalAllow = (int)$this->getOption('interval_allow');
+        $rangeAllow = $this->getOption('range_allow');
+
+        $regexDeny = $this->getOption('regex_deny');
+        $intervalDeny = (int)$this->getOption('interval_deny');
+        $rangeDeny = $this->getOption('range_deny');
 
         $intervalWorker = $this->getWorker('interval');
         $regexWorker = $this->getWorker('regex');
         $rangeWorker = $this->getWorker('range');
 
-        $this->init();
-
-        if (empty($interval)) {
-            $interval = 1;
+        if (empty($intervalAllow)) {
+            $intervalAllow = 1;
         }
-        if (empty($sepInput)) {
-            $sepInput = '\n';
-            $this->log('Warning:  no input separator specified, using default: \n');
+        if (empty($intervalDeny)) {
+            $intervalDeny = 1;
         }
 
-        $this->output = TextTools::explode($sepInput, $this->input);
-        foreach ($this->output as $i => $block) {
-            $this->output[$i] = TextTools::trim($block);
+        if (!empty($regexAllow)) {
+            $this->log(sprintf('Using patterns allow limit: %u pattern(s)', count($regexAllow)));
+            $dataset = $regexWorker->limitAllowed($dataset, $regexAllow, $mode);
+        }
+        if ($intervalAllow > 1) {
+            $this->log(sprintf('Using interval allow limit: %u', $intervalAllow));
+            $dataset = $intervalWorker->limitAllowed($dataset, $intervalAllow, $mode);
+        }
+        if (!empty($rangeAllow) || $rangeAllow == '0') {
+            $this->log(sprintf('Using range allow limit: %s', json_encode($rangeAllow, JSON_PRETTY_PRINT)));
+            $dataset = $rangeWorker->limitAllowed($dataset, $rangeAllow, $mode);
         }
 
-        if (!empty($regexAllowed)) {
-            $this->log(sprintf('Using patterns limit: %u pattern(s)', count($regexAllowed)));
-            $this->output = $regexWorker->limitToAllowed($this->output, $regexAllowed);
-        } else if ($interval > 1) {
-            $this->log(sprintf('Using interval limit: %u', $interval));
-            $this->output = $intervalWorker->limitToAllowed($this->output, $interval);
+        if (!empty($regexDeny)) {
+            $this->log(sprintf('Using patterns deny limit: %u pattern(s)', count($regexDeny)));
+            $dataset = $regexWorker->limitDenied($dataset, $regexDeny, $mode);
+        }
+        if ($intervalDeny > 1) {
+            $this->log(sprintf('Using interval deny limit: %u', $intervalDeny));
+            $dataset = $intervalWorker->limitDenied($dataset, $intervalDeny, $mode);
+        }
+        if (!empty($rangeDeny) || $rangeDeny == '0') {
+            $this->log(sprintf('Using range deny limit: %s', json_encode($rangeDeny, JSON_PRETTY_PRINT)));
+            $dataset = $rangeWorker->limitDenied($dataset, $rangeDeny, $mode);
         }
 
-        if (!empty($range)) {
-            $this->log(sprintf('Using limit range: %s', json_encode($range, JSON_PRETTY_PRINT)));
-            $this->output = $rangeWorker->limitToAllowed($this->output, $range);
-        }
-
-        $this->result = TextTools::implode($sepOutput, $this->output);
-
-        $this->end();
+        $this->setDataset($dataset);
 
         return true;
-    }
-
-    public function init()
-    {
-        $this->output = [];
-        $this->result = $this->input;
-
-        $this->log('Starting: limiter..');
-        $this->log('Begin.');
-    }
-
-    public function end()
-    {
-        $this->log('Finish.');
-        $this->set('output', $this->result);
-        $this->set('data', $this->output);
     }
 
     /**
@@ -106,10 +93,12 @@ class Limiter extends AbstractPlugin implements PluginInterface, LoggableInterfa
     {
         return [
             'multiline' => [
-                'regex_allowed',
+                'regex_allow',
+                'regex_deny',
             ],
             'range' => [
-                'range',
+                'range_allow',
+                'range_deny',
             ],
         ];
     }

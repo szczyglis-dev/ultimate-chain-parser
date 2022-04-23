@@ -11,6 +11,7 @@ use Szczyglis\ChainParser\Contract\InputInterface;
 class FileInput implements InputInterface
 {
     private $path;
+    private $dataset = [];
 
     /**
      * FileInput constructor.
@@ -27,5 +28,39 @@ class FileInput implements InputInterface
     public function read()
     {
         return file_get_contents($this->path);
+    }
+
+    /**
+     * @return string
+     */
+    public function getInput()
+    {
+        return file_get_contents($this->path);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDataset()
+    {
+        return $this->dataset;
+    }
+
+    /**
+     * @param $dataset
+     * @return mixed|void
+     */
+    public function setDataset($dataset)
+    {
+        $this->dataset = $dataset;
+    }
+
+    /**
+     * @param $input
+     * @return string
+     */
+    public function setInput($input)
+    {
+        $this->input = $input;
     }
 }

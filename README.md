@@ -1,7 +1,7 @@
 
 # Ultimate Chain Parser - advanced chain-flow based parser
 
-PHP 7.2.5+, current release: **1.0.4** build 2022-04-22
+PHP 7.2.5+, current release: **2.0.0** build 2022-04-23
 
 **"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
@@ -31,7 +31,7 @@ composer require szczyglis/ultimate-chain-parser
 - complex data parsing using programmable regular expressions run one after another in a defined sequence
 - easy to use and powerful configuration system
 - the flow of action based on the splitting into smaller separate tools, each of which performs a different batch of tasks in cooperation with the rest
-- tools included in the package that can work separately or together: parser, cleaner, limiter, splitter, eraser and replacer
+- tools included in the package that can work separately or together: parser, cleaner, limiter and replacer
 - modular structure based on the plug-in system, in addition, each element of the application can be extended or completely replaced with a self-created one - each element of the application has its own interface for the programmer that allows for any extension of functionality or replacement of existing ones
 - multiple extendable components: configuration providers, input data readers, data parsers, renderers, loggers, etc.
 - HTML/Ajax based configurator application included - you can test and configure the chain in real-time
@@ -96,22 +96,22 @@ same director
 ]
 ```
 
-The above CSV and JSON data has been generated completely automatically using only a few configuration options given in the parser input. The main concept behind the operation is to run a set of processing tools (called Plugins) in a chain. Each successively started process accesses the output from the previous process in the chain. Each of these chain elements can be freely configured with different options. Configuration can be done in many ways by running Chain Parser directly from your code, loading configuration from an external file and running from command line, or completely live using the Ajax web form-based configurator included in the package.
+The above CSV and JSON data has been generated completely automatically using only a few configuration options given in the parser input. The main concept behind the operation is to run a set of processing tools (called Plugins) in a chain. Each successively started process accesses the output from the previous process in the chain. Each of these chain elements can be freely configured with different options. Configuration can be done in many ways by running Chain Parser directly from your code, loading configuration from an external file and running from command line, or completely live using the Ajax web form-based configurator included in the package.Ultimate Chain Parser can also directly return a ready (not parsed) dataset prepared from analyzed data (in the form of a PHP array or JSON data).
 
 
 # Installation:
 
-**via Composer / packagist:**
+**Composer / packagist:**
 
 ```
 composer require szczyglis/ultimate-chain-parser
 ``` 
 
-or manual installation:
+**Manual installation:**
 
-  - download .zip package and extract it.
-  - run `composer install` in project directory
-  - include composer autoloader in your app
+  - download zip package and extract it.
+  - run `composer install` in project directory to install dependencies
+  - include composer autoloader in your application and instatiate ChainParser object.
 
 
 # Example of use:
@@ -152,26 +152,21 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
   $parser = new ChainParser();  
   $parser
     ->add('cleaner', new ArrayOptions([
-      'option1' => 'value1',
-      'option2' => 'value1',
+        //options
     ])
     ->add('parser', new ArrayOptions([
-      'option1' => 'value2',
-    ])
-    ->add('parser', new ArrayOptions([
-      'option1' => 'value3',
-      'option2' => 'value4',
+        //options
     ])
     ->add('limiter', new ArrayOptions([
-      'option4' => 'value3',
-      'option2' => 'value4',
+        //options
     ]); 
   
   $parser->run();
 ```
-The above code adds 4 new elements (iterations) with defined tools (named Plugins) to the chain.
+The above code adds 3 new elements (iterations) with defined tools (named Plugins) to the chain.
 Each of these elements will operate on the output of the previous element.
-The options are passed as the second argument, wrapped in the option provider class.
+The options are passed as the second argument, wrapped in the option provider class. You can combine the elements in any order and amount until you get the result you want.
+
 **Elements do not have to be added manually as above. For this purpose, you can use a predefined, prepared configuration that will build the defined chain itself in a completely programmatic way.**
 
 
@@ -182,6 +177,8 @@ The options are passed as the second argument, wrapped in the option provider cl
 The main tool of the application, used to parse data according to specific patterns and rules.
 
 **Options:**
+
+**- use_dataset** - boolean, enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
 
 **- regex_match** - A set of regular expressions to match the data found with the corresponding fields. You can add more than one pattern for each field, if more are given, it is enough that one of them is matched (the logical OR operation is performed). The option can be given in text (a separate field on a separate line), or directly in the array.
 
@@ -373,76 +370,24 @@ The main tool of the application, used to parse data according to specific patte
     ];
 
 ```
+**- sep_input_rowset** - Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
+
+**- sep_input_row** - Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+
+**- sep_input_column** - Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+
+
+**- sep_output_rowset** - Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+
+**- sep_output_row** - Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
+
+**- sep_output_column** - Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
+
 **- empty_field_placeholder** - string, Placeholder to replace the given field if the matched field is empty. Leave blank if you don't want to put any placeholders.
-
-**- rowset_separator** - string, The rowset (set of blocks) separator in the input data. Use this option only if parsing columns in multiple rowsets. It enables column-matching mode where columns are used as blocks and rows are used as rowsets. Leave this field empty to not use rowset explode and to use row-to-column parsing mode. Default: empty
-
-**- input_block_separator** - string, The record (block) separator in the input data. Depending on the operating mode (rows or columns), you can enter e.g. a new line or a comma. The newline character should be specified as {nl}. Default: newline {nl} = \n
-
-**- input_block_interval** - string, The interval at which blocks are parsed, you can eg only process every second or every third block. Default: 1 (parse every single block)
-
-**- output_record_separator** - string, Separator with which the records on the output will be joined, default: new line {nl} = \n
-
-**- output_field_separator** - string, Separator with which fields in records on output will be joined, default: comma (,)
 
 **- is_debug** - boolean, if TRUE, then append debugger information to each line of output
 
 **- is_empty_field_placeholder** - boolean, if TRUE, then replaces empty spaces in the matched fields with the string specified in the `empty_placeholder` option
-
-___
-
-## Tool: splitter
-
-A tool for splitting data into other blocks according to specific patterns and rules.
-
-**Options:**
-
-**- interval_split** - integer, Splits blocks by defined interval, default = 1
-
-**- range_output** - Leave only blocks in defined range, leave empty to export all, or type range separated by coma, indexing is from 0.
-
-  *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
-
-  *Example (text):*
-
-    0, 3, 5-7, 15-, -20
-
-  *Example (array):*
-  ```php
-    $options['range_output'] = [
-      0 => 0,
-      1 => 3,
-      2 => [
-        'from' => 5
-        'to' => 7,
-      ],
-      3 => [
-        'from' => 15,
-        'to' => null,
-      ],
-      4 => [
-        'from' => nul,
-        'to' => 20,
-      ],
-    ];
-  ```
-**- regex_split** - Split blocks by defined regex pattern, leave empty to disable.You can use () to leave matched string, e.g.: to split by 'foo' and leave 'foo' in output use regex: /(foo)/
-
-  *Syntax:* /REGEX/ or /(REGEX)/
-
-  *Example (text):*
-
-    /^(XYZ+)$/
-
-  *Example (array):*
-  ```php
-    $options['regex_split'] = [
-      '/^(XYZ+)$/',
-    ];
-  ```
-**- input_separator** -  string, Separator used to explode input into blocks, default: \n = new line
-
-**- output_separator** -  string, Separator used to join blocks in output, default: \n = new line
 
 ___
 
@@ -452,6 +397,8 @@ A tool for cleaning the input data, sanitizing and pre-preparing data for furthe
 
 **Options:**
 
+**- use_dataset** - boolean, enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
+
 **- trim** - boolean, Applies function trim() to every block
 
 **- clean_blocks** - boolean, Removes empty blocks
@@ -460,78 +407,33 @@ A tool for cleaning the input data, sanitizing and pre-preparing data for furthe
 
 **- strip_tags** - boolean, Applies function strip_tags() to all
 
-**- input_separator** - string, Separator used to explode input into blocks, default: \n = new line
+**- sep_input_rowset** - Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
 
-**- output_separator** - string, Separator used to join blocks in output, default: \n = new line
+**- sep_input_row** - Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
 
-___
+**- sep_input_column** - Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
 
-## Tool: eraser
 
-A tool for removing batches of data from text according to specific patterns and rules.
+**- sep_output_rowset** - Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
 
-**Options:**
+**- sep_output_row** - Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
 
-**- interval_erase** - integer, Removes blocks at the defined interval
-
-**- range** -  Removes blocks in specified range, specify range(s) separated by coma, indexing is from 0
-
-  *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
-
-  *Example (text):*
-
-    0, 3, 5-7, 15-, -20
-
-  *Example (array):*
-  ```php
-    $options['range'] = [
-      0 => 0,
-      1 => 3,
-      2 => [
-        'from' => 5
-        'to' => 7,
-      ],
-      3 => [
-        'from' => 15,
-        'to' => null,
-      ],
-      4 => [
-        'from' => null,
-        'to' => 20,
-      ],
-    ];
-  ```
-**- regex_erase** - Regular expressions whose matches will be removed throughout the document. The matching is done in the space of the entire document, you can enter a few on new lines.
-
-  *Syntax: /REGEX/ (per line)*
-
-  *Example (text):*
-
-    /^XYZ+$/
-    /^some unwanted data/
-
-  *Example (array):*
-  ```php
-    $options['regex_erase'] = [
-      0 => '/^XYZ+$/',
-      1 => '/^some unwanted data/',
-    ];
-
-  ```
-**- input_separator** - string, Separator used to explode input into blocks, default: \n = new line
-
-**- output_separator** - string, Separator used to join blocks in output, default: \n = new line
+**- sep_output_column** - Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
 
 ___
+
 
 ## Tool: limiter
 
-A tool for limiting the amount of generated or received data according to specific patterns and rules.
+A tool for limiting the amount of generated or received data according to specific patterns and rules, it can be used to delete data also.
 
 **Options:**
 
-**- interval** - integer, Restrict output to only blocks matching the given interval, default: 1
-**- range** - Limit blocks in output to specified ranges, leave empty to allow all blocks, or specify range(s) separated by coma, indexing is from 0
+**- use_dataset** - boolean, enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
+
+**- interval_allow** - integer, Restrict output to blocks that match the given interval, default: 1
+
+**- range_allow** - Limit output to blocks that match specified ranges, leave empty to allow all blocks, or specify range(s) separated by coma, indexing is from 0
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
@@ -558,7 +460,7 @@ A tool for limiting the amount of generated or received data according to specif
       ],
     ];
   ```
-**- regex_allowed** - Restrict output to only blocks matching the given regular expressions. You can enter a lot in new lines.
+**- regex_allow** - Restrict output to blocks that match the given regular expressions. You can enter a lot in new lines.
 
   *Syntax:* /REGEX/ (per line)
 
@@ -569,16 +471,69 @@ A tool for limiting the amount of generated or received data according to specif
 
   *Example (array):*
   ```php
-    $options['regex_allowed'] = [
+    $options['regex_allow'] = [
       0 => '/^XYZ+$/',
       1 => '/^ZYX+$/',
     ];
 
   ```
-**- input_separator** - string, Separator used to explode input into blocks, default: \n = new line
+**- interval_deny_** - integer, Restrict output to blocks that do not match the given interval, default: 1
+**- range_deny_** - Limit blocks in output to blocks that do not match specified ranges, leave empty to allow all blocks, or specify range(s) separated by coma, indexing is from 0
 
-**- output_separator** - string, Separator used to join blocks in output, default: \n = new line
+  *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
+  *Example (text):*
+
+    0, 3, 5-7, 15-, -20
+
+  *Example (array):*
+  ```php
+    $options['range'] = [
+      0 => 0,
+      1 => 3,
+      2 => [
+        'from' => 5
+        'to' => 7,
+      ],
+      3 => [
+        'from' => 15,
+        'to' => null,
+      ],
+      4 => [
+        'from' => null,
+        'to' => 20,
+      ],
+    ];
+  ```
+**- regex_deny** - Restrict output to blocks that do not match the given regular expressions. You can enter a lot in new lines.
+
+  *Syntax:* /REGEX/ (per line)
+
+  *Example (text):*
+
+    /^XYZ+$/
+    /^ZYX+$/
+
+  *Example (array):*
+  ```php
+    $options['regex_deny'] = [
+      0 => '/^XYZ+$/',
+      1 => '/^ZYX+$/',
+    ];
+
+  ```
+**- sep_input_rowset** - Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
+
+**- sep_input_row** - Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+
+**- sep_input_column** - Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+
+
+**- sep_output_rowset** - Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+
+**- sep_output_row** - Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
+
+**- sep_output_column** - Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
 ___
 
 ## Tool: replacer
@@ -587,7 +542,9 @@ A tool for converting specific batches of data to others according to specific p
 
 **Options:**
 
-**- regex_all** - Regular expressions to replace the matched string. The matching takes place throughout the document, you can enter several phrases on new lines.
+**- use_dataset** - boolean, enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element) 
+
+**- regex** - Regular expressions to replace the appropriate strings. You can enter several phrases on new lines.
 
   *Syntax:* /REGEX/ => "REPLACED STRING" (one pattern per line)
 
@@ -598,7 +555,7 @@ A tool for converting specific batches of data to others according to specific p
 
   *Example (array):*
   ```php
-    $options['pattern_all'] = [
+    $options['regex'] = [
       0 => [
         'pattern' => '/^[\d]+$/',
         'replacement' => '12345',
@@ -609,31 +566,10 @@ A tool for converting specific batches of data to others according to specific p
       ],
     ];
   ```
-**- regex_block** - Regular expressions to replace the matched string. The matching is done block by block, you can enter several expressions on new lines. Requires an input seperator to split the document into blocks.
 
-  *Syntax:* /REGEX/ => "REPLACED STRING" (one pattern per line)
+**- interval** - integer, Limits replacing only to a specific interval, default: 1
 
-  *Example (text):*
-
-    /^[\d]+$/ => 12345
-    /^([^\d]+)/ => $1
-
-  *Example (array):*
-  ```php
-    $options['pattern_block'] = [
-      0 => [
-        'pattern' => '/^[\d]+$/',
-        'replacement' => '12345',
-      ]
-      1 => [
-        'pattern' => '/^([^\d]+)/',
-        'replacement' => '$1',
-      ],
-    ];
-```
-**- interval** - integer, Limits replacing only to a specific interval, such as every other block, default: 1
-
-**- range** - Limit blocks to replace to specified ranges, leave empty to replace all blocks, or specify range(s) separated by coma, indexing is from 0
+**- range** - Limit blocks to replace to specified ranges, leave empty to replace all, or specify range(s) separated by coma, indexing is from 0
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
@@ -660,10 +596,19 @@ A tool for converting specific batches of data to others according to specific p
       ],
     ];
   ```
-**- input_separator** -  string, Separator used to explode input into blocks, default: \n = new line
 
-**- output_separator** - string, Separator used to join blocks in output, default: \n = new line
+**- sep_input_rowset** - Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
 
+**- sep_input_row** - Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+
+**- sep_input_column** - Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+
+
+**- sep_output_rowset** - Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+
+**- sep_output_row** - Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
+
+**- sep_output_column** - Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
 ___
 
 # Running in command line (PHP CLI):
@@ -692,6 +637,7 @@ You can run the command with the script cmd.php:
 Package contains 2 example files:
 
   - example.txt
+
   - example.yaml
 
 You can use this example files for test:
@@ -754,7 +700,10 @@ $parser->setConfig(new ArrayConfig([
 
 **- full_output** -- boolean, default: false, if true then all outputs from all chain elements are rendered at output, if false then only last result is rendered
 
-**- logfile** -- string, absolute path to logfile if using PsrLogger (Monolog)
+**- log_file** -- string, absolute path to logfile if using PsrLogger (Monolog)
+
+
+**- no_log** -- bool, if true then disables logging
 
 
 # Loggers
@@ -939,16 +888,22 @@ use Szczyglis\ChainParser\Helper\AbstractInput;
 
 class MyInput extends AbstractInput implements InputInterface
 {
-  private $data;
+  private $input;
+  private $dataset = [];
 
-  public function __construct(string $data)
+  public function __construct(string $input)
   {
-    $this->data = $data;
+    $this->input = $input;
   }
 
-  public function read()
+  public function getInput()
   {
-    return $this->data;
+    return $this->input;
+  }
+
+  public function getDataset()
+  {
+    return $this->dataset;
   }
 }
 
@@ -1228,13 +1183,9 @@ Plugins are located in `Szczyglis\ChainParser\Plugin` namespace.
 
 **Parser** - The main tool of the application, used to parse data according to specific patterns and rules.
 
-**Splitter** - A tool for splitting data into other blocks according to specific patterns and rules.
-
 **Cleaner** - A tool for cleaning the input data, sanitizing and pre-preparing data for further processing
 
-**Eraser** - A tool for removing batches of data from text according to specific patterns and rules.
-
-**Limiter** - A tool for limiting the amount of generated or received data according to specific patterns and rules.
+**Limiter** - A tool for limiting and removing the amount of generated or received data according to specific patterns and rules.
 
 **Replacer** - A tool for converting specific batches of data to others according to specific patterns and rules.
 
@@ -1383,8 +1334,9 @@ class MyPlugin ...
 
 public function run(): bool
 {
-  $input = $this->getPrev('input'); // output from previous element in chain (or raw input if Plugin is first in chain)
-  $data = $this->getPrev('data'); // output data (as array, not parsed) from previous element in chan
+  $input = $this->getPrev('output'); // output from previous element in chain (or raw input if Plugin is first in chain)
+  $prevDataset = $this->getPrev('dataset'); // output data (as array, not parsed) from previous element in chan
+  $dataset = $this->get('dataset'); // get current dataset or output from previous element
 
   $rawInput = $this->get('input'); // raw, initial input
 
@@ -1393,6 +1345,8 @@ public function run(): bool
 
   $optionValue = $this->getOption('key'); // returns option value by key
   $allOptions = $this->getOptions(); // returns all options (as key => value array)
+
+  $dataset = $this->getDataset(); // alias for $this->get('dataset');
 
   return true;
 }
@@ -1411,17 +1365,58 @@ class MyPlugin ...
 
 public function run(): bool
 {
-  $input = $this->getPrev('input');
+  $input = $this->getPrev('output');  // get parsed previous output or current input
+  $dataset = $this->getDataset(); // get data form previous output or current input
 
-  $data = explode(',', $input); // raw output
-  $output = implode("\n", $data); // parsed output
+  // do manipulation on data
 
-  $this->set('output', $output); // output will be sent to the next element in the chain as its input
-  $this->set('data', $data);  // data will be sent to the next element in the chain as its input
+  $this->setDataset($dataset);  // data will be sent to the next element in the chain as its input
 
   return true;
 }
 ```
+
+### Helpers inside Plugin and Worker
+
+You can use some included helpers providing by AbstractPlugin and AbstractWorker abstract classes. 
+When you extend your class from them then you have access to some useful methods:
+
+
+`$this->isPattern($pattern): bool` -- checks if $pattern is valid regex pattern
+
+`$this->checkPatterns(array $patterns, string $string): bool` -- checks if at least one of the given regex patterns matches a string
+
+`$this->applyPatterns(array $patterns, string $string): string` -- applies any replacement patterns to the given string
+
+`$this->explode(string $separator, ?string $input): array` -- wrapper for explode(), allow exploding by regular expression as separator
+
+`$this->implode(string $joiner, array &$ary): string` -- wrapper for implode()
+
+`$this->strReplace($from, $to, $data): string` -- wrapper for str_replace()
+
+`$this->stripTags($data, $tags = null): string` -- wrapper for strip_tags()
+
+`$this->trim($input): string` -- wrapper for trim()
+
+`$this->inRange(array $ranges, int $i): bool` -- checks if number matches given ranges
+
+`$this->makeDataset(?string $input, string $sepRowset, string $sepRow, string $sepCol): array` -- makes 3-dimensional dataset array from string input and given separators
+
+`$this->packDataset(array $dataset, string $sepRowset, string $sepRow, string $sepCol): string` -- builds parsed result from dataset
+
+`$this->iterateDataset(array $dataset, callable $callback): array` -- applies callback on every block in dataset and returns modified by callback dataset, example:
+
+```php
+
+  $dataset = $this->iterateDataset($dataset, function($value) {
+      return str_replace('A', 'B', $value);
+  });
+```
+Doing this will cause the character A to be replaced with the character B for each element in the dataset.
+
+
+**It it good idea to check code of plugins included in the package to see live examples.**
+
 
 ### Registering options that require prior parsing:
 
@@ -1643,6 +1638,8 @@ ___
 **- 1.0.0** - Published first release. (2022-04-22)
 
 **- 1.0.4** - Increased limit if demo mode, documentation fixes. (2022-04-22)
+
+**- 2.0.0** - full dataset sharing added, eraser and splitter plugins are removed (their role is taken over by limiter), added configuration of dataset looks by freely specifying each separator for each dimension (rowset, row, column).  (2022-04-23)
 
 # Credits
  

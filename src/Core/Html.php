@@ -213,6 +213,46 @@ class Html
     }
 
     /**
+     * @param $plugin
+     * @param $name
+     * @return string
+     */
+    public function options($plugin, $name)
+    {
+        $html = '';
+
+        switch ($name) {
+            case 'io':
+                $html = '
+                    <div class="col-12">
+                        <div class="mt-3">
+                            <b>INPUT / OUTPUT</b>                  
+                        </div>    
+                        <div class="row">
+                            <div class="col">
+                                ' . $this->option($plugin, 'use_dataset') . '
+                            </div>
+                        </div>            
+                        <div class="row">
+                            <div class="col-md-6">
+                                ' . $this->option($plugin, 'sep_input_rowset') . '
+                                ' . $this->option($plugin, 'sep_input_row') . '
+                                ' . $this->option($plugin, 'sep_input_col') . '
+                            </div>
+                            <div class="col-md-6">
+                                ' . $this->option($plugin, 'sep_output_rowset') . '
+                                ' . $this->option($plugin, 'sep_output_row') . '
+                                ' . $this->option($plugin, 'sep_output_col') . '
+                            </div>
+                        </div>                
+                    </div>';
+                break;
+        }
+
+        return $html;
+    }
+
+    /**
      * @param string $plugin
      * @param string $key
      * @return string
@@ -233,42 +273,10 @@ class Html
             case 'c':
                 return $this->checkbox($key, $options[$plugin][$key]);
                 break;
-        }
-    }
-
-    public function options($plugin, $name)
-    {
-        $html = '';
-
-        switch ($name) {
-            case 'io':
-                $html = '
-                    <div class="col-12">
-                        <div class="mt-3">
-                            <b>INPUT / OUTPUT</b>                  
-                        </div>    
-                        <div class="row">
-                            <div class="col">
-                                '.$this->option($plugin, 'use_dataset').'
-                            </div>
-                        </div>            
-                        <div class="row">
-                            <div class="col-md-6">
-                                '.$this->option($plugin, 'sep_input_rowset').'
-                                '.$this->option($plugin, 'sep_input_row').'
-                                '.$this->option($plugin, 'sep_input_col').'
-                            </div>
-                            <div class="col-md-6">
-                                '.$this->option($plugin, 'sep_output_rowset').'
-                                '.$this->option($plugin, 'sep_output_row').'
-                                '.$this->option($plugin, 'sep_output_col').'
-                            </div>
-                        </div>                
-                    </div>';
+            case 'r':
+                return $this->radio($key, $options[$plugin][$key]);
                 break;
-        }  
-
-        return $html;      
+        }
     }
 
     /**
@@ -385,12 +393,18 @@ class Html
     public function checkbox(string $key, array $option)
     {
         $label = $key;
-        $value = $option['value'];
-        $help = $option['help'];
+        $value = '';
+        $help = '';
         $syntax = '';
         $example = '';
         $checked = '';
 
+        if (isset($option['value']) && !empty($option['value'])) {
+            $value = $option['value'];
+        }
+        if (isset($option['help']) && !empty($option['help'])) {
+            $help = $option['help'];
+        }
         if (isset($option['checked']) && $option['checked'] == true) {
             $checked = 'checked';
         }
@@ -419,5 +433,79 @@ class Html
 		      ' . $example . '
 		      </small>
 		    </div>';
+    }
+
+    /**
+     * @param string $key
+     * @param array $option
+     * @return string
+     */
+    public function radio(string $key, array $option)
+    {
+        $label = $key;
+        $value = '';
+        $help = '';
+        $syntax = '';
+        $example = '';
+        $checked = '';
+        $choices = [];
+        if (isset($option['value']) && !empty($option['value'])) {
+            $value = $option['value'];
+        }
+        if (isset($option['help']) && !empty($option['help'])) {
+            $help = $option['help'];
+        }
+        if (isset($option['choices'])) {
+            $choices = $option['choices'];
+        }
+        if (isset($option['checked'])) {
+            $checked = $option['checked'];
+        }
+        if (!empty($option['syntax'])) {
+            $syntax = '
+          <span class="help-syntax">
+            <span class="k">Syntax:</span> ' . $option['syntax'] . '
+          </span>';
+        }
+        if (!empty($option['example'])) {
+            $example = '
+          <span class="help-example">
+            <span class="k">Example:</span><br/>
+            ' . $option['example'] . '
+          </span>';
+        }
+
+        $html = [];
+        foreach ($choices as $k => $label) {
+            $isChecked = '';
+            if ($k == $value) {
+                $isChecked = ' checked';
+            }
+            $html[] = '
+            <div class="form-check form-check-inline mt-2">
+              <input data-option="' . $key . '" name="form[' . $key . '][]" class="form-check-input" type="radio" value="' . $k . '" ' . $isChecked . '>
+              <label class="form-check-label">
+                ' . $label . '
+              </label>
+            </div>
+            ';
+        }
+
+        $footer = '<small class="form-text text-muted">' . $help . '
+              ' . $syntax . '
+              ' . $example . '
+              </small>';
+
+        $res = '
+            <div class="row">
+                <div class="col">
+                <b>data_mode</b>
+                </col>
+                <div class="col">
+                ' . implode("\n", $html) . $footer . '
+                </col>
+            </div>
+        ';
+        return $res;
     }
 }

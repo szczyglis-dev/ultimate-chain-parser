@@ -55,27 +55,6 @@ trait DataTrait
 
     /**
      * @param string $key
-     * @param $value
-     * @return $this
-     */
-    public function set(string $key, $value)
-    {
-        $this->data->set($key, $value);
-
-        return $this;
-    }
-
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function get(string $key)
-    {
-        return $this->data->get($key);
-    }
-
-    /**
-     * @param string $key
      * @return mixed
      */
     public function has(string $key)
@@ -215,5 +194,43 @@ trait DataTrait
     public function getWorker(string $id)
     {
         return $this->data->getWorker($id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDataset()
+    {
+        return $this->get('dataset');
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get(string $key)
+    {
+        return $this->data->get($key);
+    }
+
+    /**
+     * @param $dataset
+     * @return DataTrait
+     */
+    public function setDataset($dataset)
+    {
+        return $this->set('dataset', $dataset);
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     * @return $this
+     */
+    public function set(string $key, $value)
+    {
+        $this->data->set($key, $value);
+
+        return $this;
     }
 }

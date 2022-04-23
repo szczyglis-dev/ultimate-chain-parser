@@ -17,15 +17,13 @@ class TextRenderer extends AbstractRenderer implements RendererInterface
      */
     public function renderOutput()
     {
-        $all = (bool)$this->config->get('full_output');
-
-        if ($all) {
-
+        $showAll = (bool)$this->config->get('full_output');
+        $res = [];
+        if ($showAll) {
             $delimiter = "\n";
             if ($this->config->has('render_delimiter')) {
                 $delimiter = $this->config->get('render_delimiter');
             }
-            $res = [];
             foreach ($this->output as $item) {
                 $res[] = $item->get('output');
             }
@@ -44,15 +42,14 @@ class TextRenderer extends AbstractRenderer implements RendererInterface
      */
     public function renderData()
     {
-        $all = (bool)$this->config->get('full_output');
+        $showAll = (bool)$this->config->get('full_output');
+        $res = [];
 
-        if ($all) {
-
+        if ($showAll) {
             $delimiter = "\n";
             if ($this->config->has('render_delimiter')) {
                 $delimiter = $this->config->get('render_delimiter');
             }
-            $res = [];
             foreach ($this->output as $item) {
                 $res[] = json_encode($item->get('dataset'), JSON_PRETTY_PRINT);
             }
@@ -71,15 +68,14 @@ class TextRenderer extends AbstractRenderer implements RendererInterface
      */
     public function renderLog()
     {
-        $all = (bool)$this->config->get('full_output');
+        $showAll = (bool)$this->config->get('full_output');
+        $res = [];
 
-        if ($all) {
-
+        if ($showAll) {
             $delimiter = "\n";
             if ($this->config->has('render_delimiter')) {
                 $delimiter = $this->config->get('render_delimiter');
             }
-            $res = [];
             foreach ($this->output as $item) {
                 $loggers = $item->getLog();
                 foreach ($loggers as $lines) {

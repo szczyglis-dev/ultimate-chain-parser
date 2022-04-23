@@ -18,52 +18,174 @@ class RegexWorker extends AbstractWorker implements WorkerInterface, LoggableWor
      * @param array $patterns
      * @param int $interval
      * @param array $ranges
-     * @return void
+     * @param string $mode
+     * @return array
      */
-    public function replaceBlocks(array &$data, array &$patterns, int $interval, array &$ranges)
+    public function replace(array &$data, array &$patterns, int $interval, array &$ranges, string $mode)
     {
-        $n = 1;
-        foreach ($data as $i => $block) {
-            if (!empty($ranges) && !in_array($i, $ranges)) {
-                $this->log(sprintf('Ignoring. Range not match [%u]', $i));
-                continue;
-            }
-
-            if ($interval != 1 && $n % $interval != 0) {
-                $this->log(sprintf('Ignoring. Interval not match [%u]', $i));
-                $n++;
-                continue;
-            }
-            foreach ($patterns as $pattern) {
-                if (count($pattern) != 2) {
-                    $this->log(sprintf('Invalid pattern option format!'));
-                    continue;
-                }
-                $block = preg_replace($pattern['pattern'], $pattern['replacement'], $block);
-                $this->log(sprintf('Executed pattern: %s => %s', $pattern['pattern'], $pattern['replacement']));
-            }
-            $data[$i] = $block;
-            $n++;
+        switch ($mode) {
+            case 'rowset':
+                return $this->replaceRowsets($data, $patterns, $interval, $ranges, $mode);
+                break;
+            case 'row':
+                return $this->replaceRows($data, $patterns, $interval, $ranges, $mode);
+                break;
+            case 'column':
+                return $this->replaceCols($data, $patterns, $interval, $ranges, $mode);
+                break;
         }
     }
 
     /**
-     * @param string $input
+     * @param array $data
      * @param array $patterns
+     * @param int $interval
+     * @param array $ranges
+     * @param string $mode
+     * @return array
      */
-    public function replaceAll(string &$input, array &$patterns)
+    public function replaceRowsets(array &$data, array &$patterns, int $interval, array &$ranges, string $mode)
     {
-        foreach ($patterns as $pattern) {
-            if (count($pattern) != 2) {
-                $this->log(sprintf('Invalid pattern option'));
-                continue;
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        $n = 1;
+        $isReplace = true;
+        foreach ($dataset as $i => $rows) {
+            if (!empty($ranges)) {
+                if (!$this->inRange($ranges, $i)) {
+                    $this->log(sprintf('Ignoring rowset not in range: [%u]', $i));
+                    $isReplace = false;
+                }
             }
-            if (!TextTools::isPattern($pattern['pattern'])) {
-                $this->log(sprintf('Warning: Invalid pattern: %s. Aborting!', $pattern['pattern']));
-                continue;
+            if ($interval != 1) {
+                if ($n % $interval != 0) {
+                    $this->log(sprintf('Ignoring rowset not in interval: [%u]', $i));
+                    $isReplace = false;
+                }
             }
-            $input = preg_replace($pattern['pattern'], $pattern['replacement'], $input);
-            $this->log(sprintf('Executed pattern: %s => %s', $pattern['pattern'], $pattern['replacement']));
+
+            $tmpRows = [];
+            foreach ($rows as $j => $row) {
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if ($isReplace) {
+                        $col = $this->applyPatterns($patterns, $col);
+                    }
+                    if (is_string($k)) {
+                        $tmpRow[$k] = $col;
+                    } else {
+                        $tmpRow[] = $col;
+                    }
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+            $n++;
         }
+        return $tmp;
+    }
+
+    /**
+     * @param array $data
+     * @param array $patterns
+     * @param int $interval
+     * @param array $ranges
+     * @param string $mode
+     * @return array
+     */
+    public function replaceRows(array &$data, array &$patterns, int $interval, array &$ranges, string $mode)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            $tmpRows = [];
+            $n = 1;
+            $isReplace = true;
+            foreach ($rows as $j => $row) {
+                if (!empty($ranges)) {
+                    if (!$this->inRange($ranges, $j)) {
+                        $this->log(sprintf('Ignoring row not in range: [%u][%u]', $i, $j));
+                        $isReplace = false;
+                    }
+                }
+                if ($interval != 1) {
+                    if ($n % $interval != 0) {
+                        $this->log(sprintf('Ignoring row not in interval: [%u][%u]', $i, $j));
+                        $isReplace = false;
+                    }
+                }
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if ($isReplace) {
+                        $col = $this->applyPatterns($patterns, $col);
+                    }
+                    $tmpRow[] = $col;
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+                $n++;
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
+    }
+
+    /**
+     * @param array $data
+     * @param array $patterns
+     * @param int $interval
+     * @param array $ranges
+     * @param string $mode
+     * @return array
+     */
+    public function replaceCols(array &$data, array &$patterns, int $interval, array &$ranges, string $mode)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            $tmpRows = [];
+            foreach ($rows as $j => $row) {
+                $tmpRow = [];
+                $n = 1;
+                foreach ($row as $k => $col) {
+                    $isReplace = true;
+                    if (!empty($ranges)) {
+                        if (!$this->inRange($ranges, $k)) {
+                            $this->log(sprintf('Ignoring column not in range: [%u][%u][%u]', $i, $j, $k));
+                            $isReplace = false;
+                        }
+                    }
+                    if ($interval != 1) {
+                        if ($n % $interval != 0) {
+                            $this->log(sprintf('Ignoring column not in interval: [%u][%u][%u]', $i, $j, $k));
+                            $isReplace = false;
+                        }
+                    }
+                    if ($isReplace) {
+                        $col = $this->applyPatterns($patterns, $col);
+                    }
+                    $tmpRow[] = $col;
+                    $n++;
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
     }
 }

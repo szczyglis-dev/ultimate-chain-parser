@@ -15,42 +15,33 @@ class BuildWorker extends AbstractWorker implements WorkerInterface, LoggableWor
 {
     /**
      * @param array $rowsets
-     * @return string
+     * @return array
      */
-    public function build(array &$rowsets): string
+    public function postProcess(array &$rowsets): array
     {
-        $outputFields = $this->getVar('output_fields');
-
-        $sepRecord = TextTools::prepareSeparator($this->getOption('output_record_separator'));
-        $sepField = TextTools::prepareSeparator($this->getOption('output_field_separator'));
+        $outputFields = $this->getOption('output_fields');
         $placeholder = $this->getOption('empty_field_placeholder');
         if (!(bool)$this->getOption('is_empty_field_placeholder')) {
             $placeholder = '';
         }
-        if (empty($sepRecord) && $sepRecord != " ") {
-            $this->log('Warning: no output record separator specified!');
-        }
-        if (empty($sepField) && $sepField != " ") {
-            $this->log('Warning: no output field separator specified!');
-        }
 
         $result = [];
-        foreach ($rowsets as $rowset) {
-            foreach ($rowset as $record) {
+        foreach ($rowsets as $i => $rows) {
+            foreach ($rows as $j => $row) {
                 $cols = [];
-                foreach ($outputFields as $field) {
-                    $cols[$field] = '';
-                    if (isset($record[$field])) {
-                        $cols[$field] = $record[$field];
+                foreach ($row as $k => $col) {
+                    $cols[$k] = '';
+                    if (in_array($k, $outputFields)) {
+                        $cols[$k] = $col;
                     }
-                    if (empty($cols[$field]) && !empty($placeholder)) {
-                        $cols[$field] = $placeholder;
+                    if (empty($cols[$k]) && !empty($placeholder)) {
+                        $cols[$k] = $placeholder;
                     }
                 }
-                $result[] = TextTools::implode($sepField, $cols);
+                $result[$i][$j] = $cols;
             }
         }
 
-        return TextTools::implode($sepRecord, $result);
+        return $result;
     }
 }

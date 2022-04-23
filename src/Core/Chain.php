@@ -27,8 +27,8 @@ class Chain
      */
     public function run(): self
     {
-        $prevOutput = $this->input->read();
-        $prevDataset = [];
+        $prevOutput = $this->input->getInput();
+        $prevDataset = $this->input->getDataset();
 
         foreach ($this->loggers as $logger) {
             $logger->onBegin();

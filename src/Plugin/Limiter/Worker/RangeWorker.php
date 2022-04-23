@@ -16,54 +16,246 @@ class RangeWorker extends AbstractWorker implements WorkerInterface, LoggableWor
     /**
      * @param array $data
      * @param array $ranges
+     * @param string $mode
      * @return array
      */
-    public function limitToAllowed(array &$data, array $ranges)
+    public function limitAllowed(array &$data, array $ranges, string $mode)
     {
-        $output = [];
+        switch ($mode) {
+            case 'rowset':
+                return $this->allowRowsets($ranges, $data);
+                break;
+            case 'row':
+                return $this->allowRows($ranges, $data);
+                break;
+            case 'column':
+                return $this->allowCols($ranges, $data);
+                break;
+        }
+    }
+
+    /**
+     * @param array $ranges
+     * @return array
+     */
+    public function allowRowsets(array $ranges)
+    {
+        $dataset = $this->getDataset();
+
         $tmp = [];
-        foreach ($ranges as $k) {
-            // single
-            if (!is_array($k)) {
-                if (isset($data[$k])) {
-                    $tmp[$k] = $data[$k];
-                    $this->log(sprintf('Range matched: %s', $k));
+        foreach ($dataset as $i => $rows) {
+            if (!$this->inRange($ranges, $i)) {
+                $this->log(sprintf('Removing not in range rowset [%u]', $i));
+                continue;
+            }
+            $tmpRows = [];
+            $isMatched = false;
+            foreach ($rows as $j => $row) {
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if (is_string($k)) {
+                        $tmpRow[$k] = $col;
+                    } else {
+                        $tmpRow[] = $col;
+                    }
                 }
-            } else {
-                // range
-                if (!is_null($k['from']) && !is_null($k['to'])) {
-                    if ($k['from'] <= $k['to']) {
-                        for ($i = $k['from']; $i <= $k['to']; $i++) {
-                            $tmp[$i] = $data[$i];
-                            $this->log(sprintf('Range matched [%u-%u] : %u', $k['from'], $k['to'], $i));
-                        }
-                    }
-                } else if (!is_null($k['from'])) {
-                    $max = count($data);
-                    if ($k['from'] < $max) {
-                        for ($i = $k['from']; $i < $max; $i++) {
-                            $tmp[$i] = $data[$i];
-                            $this->log(sprintf('Range matched: [%u>] : %u', $k['from'], $i));
-                        }
-                    }
-                } else if (!is_null($k['to'])) {
-                    $max = count($data);
-                    if ($k['to'] < $max) {
-                        for ($i = 0; $i < $k['to']; $i++) {
-                            $tmp[$i] = $data[$i];
-                            $this->log(sprintf('Range matched: [<%u] : %u', $k['to'], $i));
-                        }
-                    }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
                 }
             }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
         }
-        $this->log(sprintf('Merging ranges...'));
-        $i = 1;
-        foreach ($tmp as $item) {
-            $output[] = $item;
-            $this->log(sprintf('Creating block [%u]', $i));
-            $i++;
+        return $tmp;
+    }
+
+    /**
+     * @param array $ranges
+     * @return array
+     */
+    public function allowRows(array $ranges)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            $tmpRows = [];
+            foreach ($rows as $j => $row) {
+                if (!$this->inRange($ranges, $j)) {
+                    $this->log(sprintf('Removing not in range row [%u]', $j));
+                    continue;
+                }
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if (is_string($k)) {
+                        $tmpRow[$k] = $col;
+                    } else {
+                        $tmpRow[] = $col;
+                    }
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
         }
-        return $output;
+        return $tmp;
+    }
+
+    /**
+     * @param array $ranges
+     * @return array
+     */
+    public function allowCols(array $ranges)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            $tmpRows = [];
+            foreach ($rows as $j => $row) {
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if ($this->inRange($ranges, $k)) {
+                        $tmpRow[] = $col;
+                    } else {
+                        $this->log(sprintf('Removing not in range column [%u => %u => %u]', $i, $j, $k));
+                    }
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
+    }
+
+    /**
+     * @param array $data
+     * @param array $ranges
+     * @param string $mode
+     * @return array
+     */
+    public function limitDenied(array &$data, array $ranges, string $mode)
+    {
+        switch ($mode) {
+            case 'rowset':
+                return $this->denyRowsets($ranges, $data);
+                break;
+            case 'row':
+                return $this->denyRows($ranges, $data);
+                break;
+            case 'column':
+                return $this->denyCols($ranges, $data);
+                break;
+        }
+    }
+
+    /**
+     * @param array $ranges
+     * @return array
+     */
+    public function denyRowsets(array $ranges)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            if ($this->inRange($ranges, $i)) {
+                $this->log(sprintf('Removing not in range rowset [%u]', $i));
+                continue;
+            }
+            $tmpRows = [];
+            $isMatched = false;
+            foreach ($rows as $j => $row) {
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if (is_string($k)) {
+                        $tmpRow[$k] = $col;
+                    } else {
+                        $tmpRow[] = $col;
+                    }
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
+    }
+
+    /**
+     * @param array $ranges
+     * @return array
+     */
+    public function denyRows(array $ranges)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            $tmpRows = [];
+            foreach ($rows as $j => $row) {
+                if ($this->inRange($ranges, $j)) {
+                    $this->log(sprintf('Removing not in range row [%u]', $j));
+                    continue;
+                }
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if (is_string($k)) {
+                        $tmpRow[$k] = $col;
+                    } else {
+                        $tmpRow[] = $col;
+                    }
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
+    }
+
+    /**
+     * @param array $ranges
+     * @return array
+     */
+    public function denyCols(array $ranges)
+    {
+        $dataset = $this->getDataset();
+
+        $tmp = [];
+        foreach ($dataset as $i => $rows) {
+            $tmpRows = [];
+            foreach ($rows as $j => $row) {
+                $tmpRow = [];
+                foreach ($row as $k => $col) {
+                    if (!$this->inRange($ranges, $k)) {
+                        $tmpRow[] = $col;
+                    } else {
+                        $this->log(sprintf('Removing not in range column [%u => %u => %u]', $i, $j, $k));
+                    }
+                }
+                if (!empty($tmpRow)) {
+                    $tmpRows[] = $tmpRow;
+                }
+            }
+            if (!empty($tmpRows)) {
+                $tmp[] = $tmpRows;
+            }
+        }
+        return $tmp;
     }
 }

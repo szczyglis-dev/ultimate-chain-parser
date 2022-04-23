@@ -30,9 +30,9 @@ class ConsoleRenderer extends AbstractRenderer implements RendererInterface
 
     public function renderOutput()
     {
-        $all = (bool)$this->config->get('full_output');
+        $showAll = (bool)$this->config->get('full_output');
 
-        if ($all) {
+        if ($showAll) {
             foreach ($this->output as $item) {
                 $this->console->writeln($item->get('output'));
             }
@@ -46,9 +46,9 @@ class ConsoleRenderer extends AbstractRenderer implements RendererInterface
 
     public function renderData()
     {
-        $all = (bool)$this->config->get('full_output');
+        $showAll = (bool)$this->config->get('full_output');
 
-        if ($all) {
+        if ($showAll) {
             foreach ($this->output as $item) {
                 $this->console->writeln(json_encode($item->get('data'), JSON_PRETTY_PRINT));
             }
@@ -62,9 +62,9 @@ class ConsoleRenderer extends AbstractRenderer implements RendererInterface
 
     public function renderLog()
     {
-        $all = (bool)$this->config->get('full_output');
+        $showAll = (bool)$this->config->get('full_output');
 
-        if ($all) {
+        if ($showAll) {
             foreach ($this->output as $item) {
                 $loggers = $item->getLog();
                 foreach ($loggers as $lines) {

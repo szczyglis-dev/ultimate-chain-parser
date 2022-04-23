@@ -38,9 +38,6 @@ class ChainParser
     public function __construct(bool $init = false)
     {
         $this->initials['plugins'] = [
-            //Plugin\LineParser\LineParser::class,
-            Plugin\Splitter\Splitter::class,
-            Plugin\Eraser\Eraser::class,
             Plugin\Cleaner\Cleaner::class,
             Plugin\Limiter\Limiter::class,
             Plugin\Replacer\Replacer::class,

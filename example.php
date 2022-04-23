@@ -46,7 +46,7 @@ try {
             exit;
         }
 
-        $form = $request->request->all('form'); // get form        
+        $form = $request->request->all('form'); // get form 
 
         if (isset($form['is_output_all']) && $form['is_output_all'] == 1) {
             $isAll = true;
@@ -531,8 +531,6 @@ same director
                         <div class="form-group">
                             <select class="form-control" id="tool-select">
                                 <option value="parser" selected>parser</option>
-                                <option value="splitter">splitter</option>
-                                <option value="eraser">eraser</option>
                                 <option value="cleaner">cleaner</option>
                                 <option value="limiter">limiter</option>
                                 <option value="replacer">replacer</option>
@@ -553,7 +551,7 @@ same director
     <footer class="footer">
         <div class="row">
             <div class="col f">
-                © <?php echo date('Y'); ?> ChainParser v.<?php echo $html->getVersion(); ?> | by Marcin "szczyglis"
+                © <?php echo date('Y'); ?> Ultimate Chain Parser v.<?php echo $html->getVersion(); ?> | by Marcin "szczyglis"
                 Szczygliński<br/>
                 <a href="<?php echo $html->getGitHubUrl(); ?>"
                    target="_blank"><?php echo $html->getGitHubUrl(); ?></a><br/>
@@ -570,7 +568,6 @@ same director
         <?php echo $html->controls(); ?>
         <div class="row plugin-body">
             <div class="col">
-                <?php echo $html->options('parser', 'io'); ?>
                 <div class="row">
                     <div class="col-lg-4">
                         <?php echo $html->option('parser', 'regex_match'); ?>
@@ -589,30 +586,11 @@ same director
                     <div class="col-lg-4">
                         <?php echo $html->option('parser', 'fields'); ?>
                         <?php echo $html->option('parser', 'output_fields'); ?>
-                        <?php echo $html->option('parser', 'input_block_separator'); ?>
-                        <?php echo $html->option('parser', 'input_block_interval'); ?>
-                        <?php echo $html->option('parser', 'rowset_separator'); ?>
-                        <?php echo $html->option('parser', 'output_field_separator'); ?>
-                        <?php echo $html->option('parser', 'output_record_separator'); ?>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row plugin-container d-none border-top pt-2" data-plugin="splitter" data-index="" data-initialized="0"
-     data-expanded="1">
-    <div class="col">
-        <?php echo $html->controls(); ?>
-        <div class="row plugin-body">
-            <div class="col-md-6">
-                <?php echo $html->option('splitter', 'interval_split'); ?>
-                <?php echo $html->option('splitter', 'range_output'); ?>
-            </div>
-            <div class="col-md-6">
-                <?php echo $html->option('splitter', 'regex_split'); ?>
-                <?php echo $html->option('splitter', 'input_separator'); ?>
-                <?php echo $html->option('splitter', 'output_separator'); ?>
+                <div class="row">
+                    <?php echo $html->options('parser', 'io'); ?>                    
+                </div>
             </div>
         </div>
     </div>
@@ -636,38 +614,24 @@ same director
     </div>
 </div>
 
-<div class="row plugin-container d-none border-top pt-2" data-plugin="eraser" data-index="" data-initialized="0"
-     data-expanded="1">
-    <input data-option="plugin_name" type="hidden" name="form[plugin_name][]" value=""/>
-    <div class="col">
-        <?php echo $html->controls(); ?>
-        <div class="row plugin-body">
-            <div class="col-md-6">
-                <?php echo $html->option('eraser', 'interval_erase'); ?>
-                <?php echo $html->option('eraser', 'range'); ?>
-            </div>
-            <div class="col-md-6">
-                <?php echo $html->option('eraser', 'regex_erase'); ?>
-                <?php echo $html->option('eraser', 'input_separator'); ?>
-                <?php echo $html->option('eraser', 'output_separator'); ?>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="row plugin-container d-none border-top pt-2" data-plugin="limiter" data-index="" data-initialized="0"
      data-expanded="1">
     <div class="col">
         <?php echo $html->controls(); ?>
         <div class="row plugin-body">
             <div class="col-md-6">
-                <?php echo $html->option('limiter', 'interval'); ?>
-                <?php echo $html->option('limiter', 'range'); ?>
-                <?php echo $html->option('limiter', 'regex_allowed'); ?>
+                <?php echo $html->option('limiter', 'interval_allow'); ?>
+                <?php echo $html->option('limiter', 'range_allow'); ?>
+                <?php echo $html->option('limiter', 'regex_allow'); ?>
             </div>
             <div class="col-md-6">
-                <?php echo $html->option('limiter', 'input_separator'); ?>
-                <?php echo $html->option('limiter', 'output_separator'); ?>
+                <?php echo $html->option('limiter', 'interval_deny'); ?>
+                <?php echo $html->option('limiter', 'range_deny'); ?>
+                <?php echo $html->option('limiter', 'regex_deny'); ?>
+            </div>
+            <div class="col-12">
+                <?php echo $html->options('limiter', 'io'); ?>
+                <?php echo $html->option('limiter', 'data_mode'); ?>
             </div>
         </div>
     </div>
@@ -679,14 +643,15 @@ same director
         <?php echo $html->controls(); ?>
         <div class="row plugin-body">
             <div class="col-md-6">
-                <?php echo $html->option('replacer', 'regex_all'); ?>
-                <?php echo $html->option('replacer', 'regex_block'); ?>
+                <?php echo $html->option('replacer', 'regex'); ?>
             </div>
             <div class="col-md-6">
                 <?php echo $html->option('replacer', 'interval'); ?>
                 <?php echo $html->option('replacer', 'range'); ?>
-                <?php echo $html->option('replacer', 'input_separator'); ?>
-                <?php echo $html->option('replacer', 'output_separator'); ?>
+            </div>
+            <div class="col-12">
+                <?php echo $html->options('replacer', 'io'); ?>
+                <?php echo $html->option('replacer', 'data_mode'); ?>
             </div>
         </div>
     </div>
@@ -701,8 +666,6 @@ same director
 <script>
     const templates = {
         'parser': 'parser',
-        'splitter': 'splitter',
-        'eraser': 'eraser',
         'cleaner': 'cleaner',
         'limiter': 'limiter',
         'replacer': 'replacer',
@@ -714,9 +677,11 @@ same director
             addElement(data.plugins[k]);
         }
         for (const k in data.options) {
-            $('input[name="form[' + data.options[k]['k'] + '][' + data.options[k]['i'] + ']"]').val(data.options[k]['v']);
+            $('input[type="text"][name="form[' + data.options[k]['k'] + '][' + data.options[k]['i'] + ']"]').val(data.options[k]['v']);
+            $('input[type="hidden"][name="form[' + data.options[k]['k'] + '][' + data.options[k]['i'] + ']"]').val(data.options[k]['v']);
             $('textarea[name="form[' + data.options[k]['k'] + '][' + data.options[k]['i'] + ']"]').val(data.options[k]['v']);
             $('input[type="checkbox"][name="form[' + data.options[k]['k'] + '][' + data.options[k]['i'] + ']"]').prop('checked', true);
+            $('input[type="radio"][name="form[' + data.options[k]['k'] + '][' + data.options[k]['i'] + ']"][value="'+data.options[k]['v']+'"]').prop('checked', true);
             addElement(data.options[k]);
         }
         for (const k in data.plugins) {
@@ -820,9 +785,9 @@ same director
     }
 
     function addElement(id) {
+        const c = $('.plugin-container[data-initialized="1"]').length;
         <?php if ($html->isDemoMode()) {
-        echo "const c = $('.plugin-container[data-initialized=\"1\"]').length;
-        if (c >= " . $html->getChainLengthLimit() . ") {
+        echo "if (c >= " . $html->getChainLengthLimit() . ") {
             alert(\"Limit of maximum " . $html->getChainLengthLimit() . " chain elements in Live Demo mode!\");
             return;
         }
@@ -835,6 +800,10 @@ same director
         $('#chain-container').append(el);
         refreshIndexes();
         redrawControls();
+
+        if (c == 0) {
+            el.find('input[data-option="use_dataset"]').prop('checked', false);
+        }
     }
 
     function removeElement(i) {

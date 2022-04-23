@@ -1,0 +1,55 @@
+<?php
+
+namespace Szczyglis\ChainParser\Helper\Traits;
+
+use Szczyglis\ChainParser\Contract\WorkerInterface;
+use Szczyglis\ChainParser\Core\DataBag;
+use Szczyglis\ChainParser\Helper\TextTools;
+
+/**
+ * Trait ToolsTrait
+ * @package Szczyglis\ChainParser\Helper\Traits
+ */
+trait RangeTrait
+{
+    /**
+     * @param array $ranges
+     * @param int $i
+     * @return bool
+     */
+    public function inRange(array $ranges, int $i)
+    {
+        $res = false;
+
+        foreach ($ranges as $k) {
+            // single
+            if (!is_array($k)) {
+                if ($k == $i) {
+                    $res = true;
+                    $this->log(sprintf('Range matched: %s', $k));
+                }
+            } else {
+                // range
+                if (!is_null($k['from']) && !is_null($k['to'])) {
+                    if ($k['from'] <= $k['to']) {
+                        if ($i >= $k['from'] && $i <= $k['to']) {
+                            $res = true;
+                            $this->log(sprintf('Range matched [%u-%u] : %u', $k['from'], $k['to'], $i));
+                        }
+                    }
+                } else if (!is_null($k['from'])) {
+                    if ($i >= $k['from']) {
+                        $res = true;
+                        $this->log(sprintf('Range matched: [%u>] : %u', $k['from'], $i));
+                    }
+                } else if (!is_null($k['to'])) {
+                    if ($i <= $k['to']) {
+                        $res = true;
+                        $this->log(sprintf('Range matched: [<%u] : %u', $k['to'], $i));
+                    }
+                }
+            }
+        }
+        return $res;
+    }
+}

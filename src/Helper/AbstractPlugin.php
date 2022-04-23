@@ -12,4 +12,7 @@ abstract class AbstractPlugin
     use Traits\LoggerTrait;
     use Traits\DatasetTrait;
     use Traits\FlowTrait;
+    use Traits\RangeTrait;
+    use Traits\RegexTrait;
+    use Traits\TextTrait;
 }

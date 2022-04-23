@@ -14,13 +14,14 @@ trait FlowTrait
 {
     public function init()
     {
-        $this->log('Starting: '.$this->getName().'...');
+        $this->log('Starting: ' . $this->getName() . '...');
         $this->log('Begin.');
 
-        $this->set('input', TextTools::prepareInput($this->getPrev('output')));
+        $this->set('input', (string)$this->getPrev('output'));
         $this->set('output', $this->get('input'));
 
         $useDataset = (bool)$this->getOption('use_dataset');
+
         if ($useDataset) {
             $this->log('Using previous output dataset as current dataset...');
             $this->set('dataset', $this->getPrev('dataset'));

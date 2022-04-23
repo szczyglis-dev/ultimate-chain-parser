@@ -21,7 +21,11 @@ interface PluginInterface
 
     public function getName();
 
+    public function init();
+
     public function run();
+
+    public function end();
 
     public function getIteration();
 

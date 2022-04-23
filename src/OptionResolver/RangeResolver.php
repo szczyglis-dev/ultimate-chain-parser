@@ -30,7 +30,7 @@ class RangeResolver implements OptionResolverInterface
         $i = 0;
         foreach ($fields as $field) {
             $value = trim($field);
-            if (empty($value)) {
+            if (empty($value) && $value != 0) {
                 continue;
             }
             $match = [];

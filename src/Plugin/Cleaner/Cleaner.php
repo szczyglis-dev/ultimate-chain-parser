@@ -19,7 +19,7 @@ class Cleaner extends AbstractPlugin implements PluginInterface, LoggableInterfa
      * @return bool
      */
     public function run(): bool
-    { 
+    {
         $trim = $this->getWorker('trim');
         $blocks = $this->getWorker('blocks');
         $html = $this->getWorker('html');
@@ -33,23 +33,23 @@ class Cleaner extends AbstractPlugin implements PluginInterface, LoggableInterfa
 
         if ((bool)$this->getOption('strip_tags')) {
             $this->log('Running: strip_tags()');
-            $dataset = $html->stripTags($dataset);
+            $dataset = $html->applyStripTags($dataset);
         }
 
         if ((bool)$this->getOption('clean_blocks')) {
             $this->log('Running: clean empty blocks');
             $dataset = $blocks->removeEmpty($dataset);
         }
-        
+
         if ((bool)$this->getOption('trim')) {
             $this->log('Running: trim()');
-            $dataset = $trim->trim($dataset);
-        }      
+            $dataset = $trim->applyTrim($dataset);
+        }
 
-        $this->set('dataset', $dataset);      
+        $this->set('dataset', $dataset);
 
         return true;
-    }    
+    }
 
     /**
      * @return array

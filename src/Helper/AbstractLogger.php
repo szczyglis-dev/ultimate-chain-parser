@@ -47,4 +47,21 @@ abstract class AbstractLogger
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         return self::STRING_MEMORY_USED . ': ' . round($mem / pow(1024, ($i = floor(log($mem, 1024)))), 2) . ' ' . $units[$i];
     }
+
+    /**
+     * @return bool|void
+     */
+    protected function isDisabled()
+    {
+        $element = $this->data->getElement();
+        if (!is_null($element)) {
+            $config = $this->data->getElement()->getConfig();
+        }
+        if (!is_null($config)) {
+            if ($config->get('no_log') == true) {
+                return;
+            }
+        }
+        return false;
+    }
 }

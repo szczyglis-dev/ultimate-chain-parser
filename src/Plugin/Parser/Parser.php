@@ -15,17 +15,11 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
 {
     const NAME = 'parser';
 
-    private $result;
-    private $input;
-    private $output = [];
-    private $blocks = [];
     private $fields = [];
-    private $outputFields = [];
-    private $rowsets = [];
+    private $output = [];
     private $numFields;
     private $idxRowset;
     private $idxRow;
-    private $idxRowsetRecord;
     private $idxBlock;
     private $idxRecord;
     private $idxField;
@@ -36,12 +30,6 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
      */
     public function run(): bool
     {
-        $this->input = TextTools::prepareInput($this->getPrev('input'));
-
-        $sepInput = TextTools::prepareSeparator($this->getOption('input_block_separator'));
-        $sepRowset = TextTools::prepareSeparator($this->getOption('rowset_separator'));
-        $isRowset = false;
-
         $matchWorker = $this->getWorker('match');
         $replaceWorker = $this->getWorker('replace');
         $buildWorker = $this->getWorker('build');
@@ -49,60 +37,18 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
 
         $this->postInit();
 
-        dump('dataset');
-        $dataset = $this->get('dataset');
-        dump($dataset);
-
-
-        $tmp = [];
-        $tmp = [
-            0 => $dataset[0],
-            1 => $dataset[0],
-        ];
-        $this->set('dataset', $tmp);
-
-        dump('dataset2');
-        dump($tmp);
-
-        $dataset = $tmp;
-
-
-        $isRowset = true;
-        
-        //return true;
-
-        
-
-        /*
-        if (!empty($sepRowset)) {
-            $isRowset = true;
-            $dataset = TextTools::explode($sepRowset, $this->input);
-        } else {
-            $dataset = [0 => $this->input];
-        }*/
-
-        $this->setVar('rowsets', $dataset);
-        $this->setVar('output_fields', $this->outputFields);
+        $dataset = $this->getDataset();
 
         foreach ($dataset as $i => $rows) {
-
-            $this->log('ROWSET:'.$i);
-
+            $this->log('IN ROWSET:' . $i);
             $this->idxRowset = $i;
-
             $this->idxRecord = 0;
 
             foreach ($rows as $j => $row) {
-
+                $this->log('IN ROW:' . $j);
                 $this->idxRow = $j;
 
-                $this->log('ROW:'.$j);
-
-                $this->blocks = $row;                
-
-                $this->setVar('blocks', $this->blocks);
-
-                if (empty($this->blocks)) {
+                if (empty($row)) {
                     continue;
                 }
 
@@ -116,7 +62,7 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
                         $this->log(sprintf('Warning: field [%u] is not defined!', $this->idxField));
                     }
 
-                    $this->log('BLOCK:'.$j);
+                    $this->log('IN COL:' . $j);
 
                     $this->field = $this->fields[$this->idxField];
 
@@ -131,43 +77,28 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
                     if ($matchWorker->isMatch($this->field, $block)) {
 
                         $block = $replaceWorker->applyRegexAfter($block, $this->field);
-
                         $this->append($this->idxRowset, $this->idxRecord, $this->field, $block);
 
                         if ($matchWorker->isNextBlockMatch($this->idxRowset, $this->idxRow, $this->idxBlock, $this->idxField)) {
-                            $this->log('[LOOP] Is next block match');
+                            $this->log('[MAIN][-OK-] Is next block match # idxField++');
                             $this->idxField++;
-                        } else if ($matchWorker->isNextRowMatch($this->idxRowset, $this->idxRow, $this->idxField)) {
-                            $this->log('[LOOP] Is next row match');
+                            $this->field = $this->fields[$this->idxField];
+                        } else if (!$matchWorker->isLastRecord($this->idxRowset, $this->idxRow) && $matchWorker->isNextRowMatch($this->idxRowset, $this->idxRow, $this->idxField)) {
+                            $this->log('[MAIN][-OK-] Is next row match # idxField++');
                             $this->idxField++;
-                        } else if ($matchWorker->isNextRecordMatch($this->idxRowset, $this->idxRow)) {
-                            $this->log('[LOOP] Is next record match');
+                            $this->field = $this->fields[$this->idxField];
+                        } else if (!$matchWorker->isLastRecord($this->idxRowset, $this->idxRow) && $matchWorker->isNextRecordMatch($this->idxRowset, $this->idxRow)) {
+                            $this->log('[MAIN][-OK-] Is next record match # idxRecord++, idxField = 0');
                             $this->idxField = 0;
                             $this->idxRecord++;
+                            $this->field = $this->fields[$this->idxField];
                         } else if ($matchWorker->isLastRecord($this->idxRowset, $this->idxRow) && $matchWorker->isNextRowsetMatch($this->idxRowset, $this->idxRow)) {
-                             $this->log('[LOOP] Is next rowset match');
-                             $this->idxField = 0;
-                             $this->idxRecord = 0;
-                             $this->idxRowsetRecord++;
+                            $this->log('[MAIN][-OK-] Is next rowset match # idxField = 0, idxRecord = 0, idxRowsetRecord++');
+                            $this->idxField = 0;
+                            $this->idxRecord = 0;
+                            $this->field = $this->fields[$this->idxField];
                         } else {
-                            $this->log('[LOOP] NOTHING MATCH');
-                            /*
-                            $isNext = false;
-                            $isNext = $matchWorker->isNextRecordMatch($this->idxRowset, $this->idxRow);
-                            $this->log((int)$isNext);
-                            if ($isRowset) {
-                               // $isNext = $matchWorker->isNextRowsetMatch($this->idxRowset);
-                            } else {
-                               // $isNext = $matchWorker->isNextRecordMatch($this->idxBlock);
-                            }
-                            if ($isNext) {
-                                $this->log('Next block matched, switching to next record...');
-                                $this->idxField = 0;
-                                $this->idxBlock++;
-                                $this->idxRecord++;
-                                continue;
-                            }
-                            */
+                            $this->log('[MAIN] Nothing matched...');
                         }
                     }
 
@@ -178,15 +109,12 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
                         $this->idxField = 0;
                     }
                 }
-                $this->idxRowsetRecord++;
-            }            
+            }
         }
-        dump('out');
-        dump($this->output);
 
-        $this->result = $buildWorker->build($this->output);
+        $this->output = $buildWorker->postProcess($this->output);
 
-        // $this->end();
+        $this->setDataset($this->output);
 
         return true;
     }
@@ -195,16 +123,12 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
     {
         $this->idxRowset = 0;
         $this->idxRow = 0;
-        $this->idxRowsetRecord = 0;
         $this->idxRecord = 0;
         $this->idxBlock = 0;
         $this->idxField = 0;
-
         $this->output = [];
-        $dataset = [];
-        $this->blocks = [];
-
         $this->fields = $this->getOption('fields');
+
         if (isset($this->fields[0])) {
             $this->field = $this->fields[0];
         } else {
@@ -213,12 +137,6 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
         }
 
         $this->numFields = count($this->fields);
-        $this->outputFields = $this->getOption('output_fields');
-
-        $this->result = $this->input;
-
-        $this->log('Starting: parser..');
-        $this->log('Begin.');
     }
 
     /**
@@ -235,7 +153,7 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
      */
     public function buildDebugPrefix()
     {
-        return sprintf('(idxRowset:%u | idxRow:%u | idxBlock:%u) [idxRecord:%u] [idxField:%u] [%s] ', $this->idxRowset, $this->idxRow, $this->idxBlock, $this->idxRecord, $this->idxField, $this->field);
+        return sprintf('(set:%u | row:%u | blo:%u) [rec:%u] [fie:%u] [%s] ', $this->idxRowset, $this->idxRow, $this->idxBlock, $this->idxRecord, $this->idxField, $this->field);
     }
 
     /**
@@ -267,13 +185,6 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
             return '';
         }
         return $this->buildDebugPrefix();
-    }
-
-    public function end()
-    {
-        $this->log('Finish.');
-        $this->set('output', $this->result);
-        $this->set('data', $this->output);
     }
 
     /**

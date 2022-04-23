@@ -35,14 +35,8 @@ class ReplaceWorker extends AbstractWorker implements WorkerInterface, LoggableW
         if (empty($patterns)) {
             return $string;
         }
-        foreach ($patterns as $pattern) {
-            if (!isset($pattern['pattern']) || !TextTools::isPattern($pattern['pattern'])) {
-                $this->log(sprintf('Warning: Invalid pattern: %s. Aborting!', $pattern['pattern']));
-                continue;
-            }
-            $string = preg_replace($pattern['pattern'], $pattern['replacement'], $string);
-        }
-        return $string;
+
+        return $this->applyPatterns($patterns, $string);
     }
 
     /**
@@ -54,17 +48,12 @@ class ReplaceWorker extends AbstractWorker implements WorkerInterface, LoggableW
     public function applyFieldRegex($type, $string, $field)
     {
         $patterns = $this->getOption($type);
+
         if (!isset($patterns[$field])) {
             return $string;
         }
-        foreach ($patterns[$field] as $pattern) {
-            if (!isset($pattern['pattern']) || !TextTools::isPattern($pattern['pattern'])) {
-                $this->log(sprintf('Warning: Invalid pattern: %s. Aborting!', $pattern['pattern']));
-                continue;
-            }
-            $string = preg_replace($pattern['pattern'], $pattern['replacement'], $string);
-        }
-        return $string;
+
+        return $this->applyPatterns($patterns[$field], $string);
     }
 
     /**

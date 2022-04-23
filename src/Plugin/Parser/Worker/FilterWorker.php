@@ -36,17 +36,6 @@ class FilterWorker extends AbstractWorker implements WorkerInterface, LoggableWo
             return false;
         }
 
-        foreach ($patterns as $pattern) {
-            if (!TextTools::isPattern($pattern)) {
-                $this->log(sprintf('Warning: Invalid pattern: %s. Aborting!', $pattern));
-                continue;
-            }
-            if (preg_match($pattern, $block)) {
-                $this->log(sprintf('Block >>%s<< marked as ignored with regex: %s', $block, $pattern));
-                return true;
-            }
-        }
-
-        return false;
+        return $this->checkPatterns($patterns, $block);
     }
 }

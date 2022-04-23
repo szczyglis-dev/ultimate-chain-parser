@@ -13,12 +13,16 @@ use Szczyglis\ChainParser\Helper\TextTools;
  */
 class HtmlWorker extends AbstractWorker implements WorkerInterface, LoggableWorkerInterface
 {
-    public function stripTags(array $dataset)
+    /**
+     * @param array $dataset
+     * @return array
+     */
+    public function applyStripTags(array $dataset)
     {
-        $callback = function($data) {
-            return TextTools::stripTags($data);
+        $callback = function ($data) {
+            return $this->stripTags($data);
         };
 
-        return $this->onDataset($dataset, $callback);
+        return $this->iterateDataset($dataset, $callback);
     }
 }
