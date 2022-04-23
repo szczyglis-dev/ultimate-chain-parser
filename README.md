@@ -1424,7 +1424,7 @@ Doing this will cause the character A to be replaced with the character B for ea
 
 ### Registering options that require prior parsing:
 
-If you need to use options that require the data to be parsed first, e.g. into an `array`, use ready-made Option Resolvers, or create your own Resolver. To register an option in the appropriate Option Resolvers, return its name in the array using the registerOptions () method. From now on, it will be parsed by the assigned Resolver. The table should include the name of the Resolver and a list of options assigned to it. Example of use:
+If you need to use options that require the data to be parsed first, e.g. into an `array`, use ready-made Option Resolvers, or create your own Resolver. To register an option in the appropriate Option Resolvers, return its name in the array using the registerOptions() method. From now on, it will be parsed by the assigned Resolver. The array should include the name of the Resolver and a list of options assigned to it. Example of use:
 
 
 ```php
