@@ -479,7 +479,7 @@ same director
                                     <button type="button" class="btn btn-link" data-toggle="collapse"
                                             data-target="#collapseData" aria-expanded="false"
                                             aria-controls="collapseData">
-                                        RAW DATA (json)
+                                        OUTPUT DATASET (json)
                                     </button>
                                 </h5>
                             </div>
