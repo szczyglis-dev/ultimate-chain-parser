@@ -5,11 +5,15 @@ chain:
     -
         plugin: cleaner
         options:
-            clean_blocks: true
-            fix_newlines: true
-            input_separator: \n
-            output_separator: \n
-            trim: true
+            clean_blocks: '1'
+            fix_newlines: '1'
+            sep_input_col: ''
+            sep_input_row: \n
+            sep_input_rowset: ''
+            sep_output_col: ','
+            sep_output_row: \n
+            sep_output_rowset: \n
+            trim: '1'
     -
         plugin: parser
         options:
@@ -19,15 +23,11 @@ chain:
                 - title
                 - actor
                 - description
-            input_block_interval: true
-            input_block_separator: \n
-            output_field_separator: ','
             output_fields:
                 - id
                 - title
                 - actor
                 - description
-            output_record_separator: \n
             regex_ignore_after: {  }
             regex_ignore_before: {  }
             regex_match:
@@ -37,9 +37,16 @@ chain:
                     - '/^[^\d]+/'
                 actor:
                     - '/^[^\d]+/'
-                0: de
+                description:
+                    - '/^[^\d]+/'
             replace_block_after: {  }
             replace_block_before: {  }
             replace_field_after: {  }
             replace_field_before: {  }
-            rowset_separator: ''
+            sep_input_col: ''
+            sep_input_row: \n
+            sep_input_rowset: ''
+            sep_output_col: ','
+            sep_output_row: \n
+            sep_output_rowset: \n
+            use_dataset: '1'
