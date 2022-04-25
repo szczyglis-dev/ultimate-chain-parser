@@ -5,15 +5,15 @@ chain:
     -
         plugin: cleaner
         options:
-            clean_blocks: '1'
-            fix_newlines: '1'
+            clean_blocks: true
+            fix_newlines: true
             sep_input_col: ''
             sep_input_row: \n
             sep_input_rowset: ''
             sep_output_col: ','
             sep_output_row: \n
             sep_output_rowset: \n
-            trim: '1'
+            trim: true
     -
         plugin: parser
         options:
@@ -49,4 +49,4 @@ chain:
             sep_output_col: ','
             sep_output_row: \n
             sep_output_rowset: \n
-            use_dataset: '1'
+            use_dataset: true
