@@ -1281,7 +1281,6 @@ class MyWorker extends AbstractWorker implements WorkerInterface, LoggableWorker
 
 ```
 ```php
-  ---
 <?php
 
 // MyPlugin.php
