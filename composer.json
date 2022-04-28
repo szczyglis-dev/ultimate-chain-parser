@@ -6,7 +6,7 @@
     "homepage": "https://github.com/szczyglis-dev/ultimate-chain-parser",
     "config": {
         "platform": {
-            "php": "7.2.5"
+            "php": "7.2.5|^8.0"
          }
      },
     "keywords": [
