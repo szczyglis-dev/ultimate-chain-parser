@@ -1,7 +1,6 @@
+PHP **7.2.5+, 8.0+**, current release: **1.2.11** build 2022-04-28
 
 # Ultimate Chain Parser - advanced chain-flow based parser
-
-PHP **7.2.5+, 8.0+**, current release: **1.2.11** build 2022-04-28
 
 **"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
 The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
