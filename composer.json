@@ -4,11 +4,6 @@
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/szczyglis-dev/ultimate-chain-parser",
-    "config": {
-        "platform": {
-            "php": "7.2.5|^8.0"
-         }
-     },
     "keywords": [
         "text",
         "parsing",
@@ -38,7 +33,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2.5",
+        "php": "^7.2.5 || ^8.0",
         "monolog/monolog": "^2.1",
         "symfony/console": "^5.1",
         "symfony/yaml": "^5.1",
