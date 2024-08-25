@@ -1647,15 +1647,10 @@ ___
 
 **- 1.2.11** - Updated composer.json (2022-04-28)
 
-# Credits
- 
-### Ultimate Chain Parser is free to use but if you liked then you can donate project via BTC: 
+--- 
+**Ultimate Chain Parser is free to use, but if you like it, you can support my work by buying me a coffee ;)**
 
-**14X6zSCbkU5wojcXZMgT9a4EnJNcieTrcr**
-
-or by PayPal:
- **[https://www.paypal.me/szczyglinski](https://www.paypal.me/szczyglinski)**
-
+https://www.buymeacoffee.com/szczyglis
 
 **Enjoy!**
 
