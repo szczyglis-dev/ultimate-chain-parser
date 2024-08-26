@@ -362,7 +362,7 @@ The main tool of the application, used to parse data according to specific patte
     ];
 
 ```
-**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n.
 
 **- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
@@ -370,9 +370,9 @@ The main tool of the application, used to parse data according to specific patte
 
 **- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n.
 
-**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,).
 
 **- empty_field_placeholder** - `string` Placeholder to replace the given field if the matched field is empty. Leave blank if you do not want to use any placeholders.
 
@@ -398,7 +398,7 @@ A tool for cleaning, sanitizing, and pre-preparing input data for further proces
 
 **- strip_tags** - `boolean` Applies the `strip_tags()` function to all.
 
-**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n.
 
 **- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
@@ -406,9 +406,9 @@ A tool for cleaning, sanitizing, and pre-preparing input data for further proces
 
 **- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n.
 
-**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,).
 
 ___
 
@@ -470,6 +470,7 @@ A tool for limiting the amount of generated or received data according to specif
 
   ```
 **- interval_deny_** - `integer` Restricts output to blocks that do not match the given interval. Default is 1.
+
 **- range_deny_** - `array`, Limits blocks in output to those that do not match specified ranges. Leave empty to allow all blocks, or specify range(s) separated by commas. Indexing starts from 0.
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
@@ -514,7 +515,7 @@ A tool for limiting the amount of generated or received data according to specif
     ];
 
   ```
-**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n.
 
 **- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
@@ -522,9 +523,9 @@ A tool for limiting the amount of generated or received data according to specif
 
 **- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n.
 
-**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,).
 ___
 
 ## Tool: replacer
@@ -590,7 +591,7 @@ A tool for converting specific batches of data to other formats according to def
     ];
   ```
 
-**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n.
 
 **- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
@@ -598,9 +599,9 @@ A tool for converting specific batches of data to other formats according to def
 
 **- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n.
 
-**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,).
 ___
 
 # Running in command line (PHP CLI)
@@ -643,7 +644,7 @@ Disable log and data output, leaving only the parse result output:
   ./cmd.php chainparser ./example.txt ./example.yaml --log=0 --data=0
   ```
 
-Store the output result in a file named `output.txt`.
+Store the output result in a file named `output.txt`:
 
   ```
   ./cmd.php chainparser ./example.txt ./example.yaml --log=0 --data=0 > output.txt
@@ -654,9 +655,9 @@ Store the output result in a file named `output.txt`.
 
 You can use the included config provider or write your own. Currently, two config providers are included:
 
-**ArrayConfig** - works with the configuration provided directly from a PHP array
+- **ArrayConfig** - works with the configuration provided directly from a PHP array.
 
-**YamlConfig** - works with the configuration read from a YAML file
+- **YamlConfig** - works with the configuration read from a YAML file.
 
 ### Usage
 ```php  
@@ -688,23 +689,23 @@ $parser->setConfig(new ArrayConfig([
 
 ### Available configuration options
 
-**- full_output** -- `boolean`, default: false. If true, all outputs from all chain elements are rendered in the output. If false, only the last result is rendered.
+**- full_output** - `boolean`, default: false. If true, all outputs from all chain elements are rendered in the output. If false, only the last result is rendered.
 
-**- log_file** -- `string`, absolute path to the logfile if using PsrLogger (Monolog).
+**- log_file** - `string`, absolute path to the logfile if using PsrLogger (Monolog).
 
 
-**- no_log** -- bool, if true, logging is disabled.
+**- no_log** - bool, if true, logging is disabled.
 
 
 # Loggers
 
 You can use the included loggers or write your own. The package includes three different loggers:
 
-**ArrayLogger** — logs everything to a PHP array
+- **ArrayLogger** - logs everything to a PHP array.
 
-**ConsoleLogger** — logs output to the CLI console
+- **ConsoleLogger** - logs output to the CLI console.
 
-**PsrLogger** — stores logs in a file using Monolog Logger
+- **PsrLogger** - stores logs in a file using Monolog Logger.
 
 
 ### Usage
@@ -762,9 +763,9 @@ Configuration providers are located in: `Szczyglis\ChainParser\Config` namespace
 
 ### Included configuration providers
 
-**ArrayConfig** - reads configuration from a PHP array passed as a constructor argument
+- **ArrayConfig** - reads configuration from a PHP array passed as a constructor argument.
 
-**YamlConfig** - reads configuration from a YAML file (path to the file needs to be passed as a constructor argument)
+- **YamlConfig** - reads configuration from a YAML file (path to the file needs to be passed as a constructor argument).
 
 ### How to create your own configuration provider
 
@@ -849,9 +850,9 @@ Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
 
 ### Included input data providers
 
-**TextInput** - reads input data directly from a text string passed as a constructor argument
+- **TextInput** - reads input data directly from a text string passed as a constructor argument.
 
-**FileInput** - reads input data from a file (path to the file needs to be passed as a constructor argument)
+- **FileInput** - reads input data from a file (path to the file needs to be passed as a constructor argument).
 
 ### How to create your own input data provider
 
@@ -921,11 +922,11 @@ Loggers are located in the `Szczyglis\ChainParser\Logger` namespace.
 
 ### Included loggers
 
-**ArrayLogger** - writes logs directly to a PHP array
+- **ArrayLogger** - writes logs directly to a PHP array.
 
-**PsrLogger** - writes logs to a file using Monolog
+- **PsrLogger** - writes logs to a file using Monolog.
 
-**ConsoleLogger** - displays logs directly to the console
+- **ConsoleLogger** - displays logs directly to the console.
 
 ### How to create your own logger
 
@@ -986,9 +987,9 @@ Options providers are located in the `Szczyglis\ChainParser\Options` namespace.
 
 ### Included options providers
 
-**ArrayOptions** - reads options directly from a PHP array passed as a constructor argument
+- **ArrayOptions** - reads options directly from a PHP array passed as a constructor argument.
 
-**FormOptions** - parses options passed as text or from an HTML form
+- **FormOptions** - parses options passed as text or from an HTML form.
 
 ### How to create your own options provider
 
@@ -1067,11 +1068,11 @@ Option resolvers are located in the `Szczyglis\ChainParser\OptionResolver` names
 
 ### Included options resolvers
 
-**SingleLineResolver** - parses options from a single line
+- **SingleLineResolver** - parses options from a single line.
 
-**MultiLineResolver** - parses more complex syntax from multiple lines
+- **MultiLineResolver** - parses more complex syntax from multiple lines.
 
-**RangeResolver** - parses range-based options, e.g., 1,2,8-10
+- **RangeResolver** - parses range-based options, e.g., 1,2,8-10.
 
 ### How to create your own option resolver, e.g. for use with own plugin configuration
 
@@ -1161,13 +1162,13 @@ Plugins are located in the `Szczyglis\ChainParser\Plugin` namespace.
 
 ### Included plugins
 
-**Parser** - The main tool of the application, used to parse data according to specific patterns and rules.
+- **Parser** - The main tool of the application, used to parse data according to specific patterns and rules.
 
-**Cleaner** - A tool for cleaning the input data, sanitizing and pre-preparing data for further processing.
+- **Cleaner** - A tool for cleaning the input data, sanitizing and pre-preparing data for further processing.
 
-**Limiter** - A tool for limiting and removing the amount of generated or received data according to specific patterns and rules.
+- **Limiter** - A tool for limiting and removing the amount of generated or received data according to specific patterns and rules.
 
-**Replacer** - A tool for converting specific batches of data to other formats according to specific patterns and rules.
+- **Replacer** - A tool for converting specific batches of data to other formats according to specific patterns and rules.
 
 ### How to create your own plugin
 
@@ -1360,29 +1361,29 @@ public function run(): bool
 
 You can use some included helpers provided by the `AbstractPlugin` and `AbstractWorker` abstract classes. When you extend your class from them, you have access to some useful methods:
 
-`$this->isPattern($pattern): bool` -- checks if `$pattern` is a valid regex pattern.
+`$this->isPattern($pattern): bool` - checks if `$pattern` is a valid regex pattern.
 
-`$this->checkPatterns(array $patterns, string $string): bool` -- checks if at least one of the given regex patterns matches a string.
+`$this->checkPatterns(array $patterns, string $string): bool` - checks if at least one of the given regex patterns matches a string.
 
-`$this->applyPatterns(array $patterns, string $string): string` -- applies any replacement patterns to the given string.
+`$this->applyPatterns(array $patterns, string $string): string` - applies any replacement patterns to the given string.
 
-`$this->explode(string $separator, ?string $input): array` -- wrapper for `explode()`, allowing explosion using a regular expression as the separator.
+`$this->explode(string $separator, ?string $input): array` - wrapper for `explode()`, allowing explosion using a regular expression as the separator.
 
-`$this->implode(string $joiner, array &$ary): string` -- wrapper for `implode()`.
+`$this->implode(string $joiner, array &$ary): string` - wrapper for `implode()`.
 
-`$this->strReplace($from, $to, $data): string` -- wrapper for `str_replace()`.
+`$this->strReplace($from, $to, $data): string` - wrapper for `str_replace()`.
 
-`$this->stripTags($data, $tags = null): string` -- wrapper for `strip_tags()`.
+`$this->stripTags($data, $tags = null): string` - wrapper for `strip_tags()`.
 
-`$this->trim($input): string` -- wrapper for `trim()`.
+`$this->trim($input): string` - wrapper for `trim()`.
 
-`$this->inRange(array $ranges, int $i): bool` -- checks if a number matches the given ranges.
+`$this->inRange(array $ranges, int $i): bool` - checks if a number matches the given ranges.
 
-`$this->makeDataset(?string $input, string $sepRowset, string $sepRow, string $sepCol): array` -- converts a string input into a 3-dimensional dataset array using the given separators.
+`$this->makeDataset(?string $input, string $sepRowset, string $sepRow, string $sepCol): array` - converts a string input into a 3-dimensional dataset array using the given separators.
 
-`$this->packDataset(array $dataset, string $sepRowset, string $sepRow, string $sepCol): string` -- builds a parsed result from the dataset.
+`$this->packDataset(array $dataset, string $sepRowset, string $sepRow, string $sepCol): string` - builds a parsed result from the dataset.
 
-`$this->iterateDataset(array $dataset, callable $callback): array` -- applies a callback to every block in the dataset and returns the dataset modified by the callback. Example:
+`$this->iterateDataset(array $dataset, callable $callback): array` - applies a callback to every block in the dataset and returns the dataset modified by the callback. Example:
 
 ```php
 
@@ -1426,19 +1427,19 @@ public function registerOptions(): array
 
 Included resolvers:
 
-**singleline** - parses single-line parameters, such as "key: value => assignment/replacement"
+- **singleline** - parses single-line parameters, such as `key: value => assignment/replacement`
 
-**multiline** - parses multi-line line parameters, such as "key: value => assignment/replacement places in many lines"
+- **multiline** - parses multi-line parameters, where `key: value => assignment/replacement` is placed on separate lines.
 
-**range** - parses range parameters, such as: "1,5,10-20,15-,-80"
+- **range** - parses range parameters, such as: `1,5,10-20,15-,-80`
 
 
 ### Logging messages
 
 From the Plugin and Worker level, you have access to log events using registered loggers. The `$this->log()` method is used for this purpose. To use event logging, you must implement the following interfaces:
 
-- in plugin: `Szczyglis\ChainParser\Contract\LoggableInterface`;
-- in worker: `Szczyglis\ChainParser\Contract\LoggableWorkerInterface`;
+- in plugin: `Szczyglis\ChainParser\Contract\LoggableInterface`
+- in worker: `Szczyglis\ChainParser\Contract\LoggableWorkerInterface`
 
 #### Example of use
 
@@ -1496,9 +1497,9 @@ Renderers are located in the `Szczyglis\ChainParser\Renderer` namespace.
 
 ### Included renderers
 
-**TextRenderer** - parses output into TXT/HTML format
+- **TextRenderer** - parses output into TXT/HTML format
 
-**ConsoleRenderer** - sends output to the console
+- **ConsoleRenderer** - sends output to the console
 
 ### How to create your own renderer
 
