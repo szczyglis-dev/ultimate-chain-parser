@@ -166,7 +166,7 @@ class Parser extends AbstractPlugin implements PluginInterface, LoggableInterfac
      */
     public function buildDebugPrefix()
     {
-        return sprintf('(set:%u | row:%u | blo:%u) [rec:%u] [fie:%u] [%s] ', $this->idxRowset, $this->idxRow, $this->idxBlock, $this->idxRecord, $this->idxField, $this->field);
+        return sprintf('(rowset:%u | row:%u | block:%u) [record:%u] [field:%u] [%s] ', $this->idxRowset, $this->idxRow, $this->idxBlock, $this->idxRecord, $this->idxField, $this->field);
     }
 
     /**
