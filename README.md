@@ -469,9 +469,9 @@ A tool for limiting the amount of generated or received data according to specif
     ];
 
   ```
-**- interval_deny_** - `integer` Restricts output to blocks that do not match the given interval. Default is 1.
+**- interval_deny** - `integer` Restricts output to blocks that do not match the given interval. Default is 1.
 
-**- range_deny_** - `array`, Limits blocks in output to those that do not match specified ranges. Leave empty to allow all blocks, or specify range(s) separated by commas. Indexing starts from 0.
+**- range_deny** - `array`, Limits blocks in output to those that do not match specified ranges. Leave empty to allow all blocks, or specify range(s) separated by commas. Indexing starts from 0.
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
