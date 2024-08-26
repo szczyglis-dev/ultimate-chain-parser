@@ -1,52 +1,49 @@
-PHP **7.2.5+, 8.0+**, current release: **1.2.11** build 2022-04-28
+Release: **1.2.12** | build: **2024.08.26** | PHP: **^7.2.5|^8.0**
 
-# Ultimate Chain Parser - advanced chain-flow based parser
+# Ultimate Chain Parser - advanced chain-flow-based parser
 
-**"Ultimate Chain Parser" is a modular package for chain processing text data and converting it into a structured output.
-The concept of application is based on processing in subsequent iterations using configurable data processing modules in a configured manner. Each such element in the execution chain accesses the output of the previous element in the chain as input.**
-
-## How to install:
+**"Ultimate Chain Parser" is a modular package designed for chain processing of text data, converting it into structured output.**
+The application concept is based on processing data in successive iterations using configurable data processing modules. Each module in the execution chain sequentially accesses the output of the preceding module and uses it as input.
+## How to install
 ```
 composer require szczyglis/ultimate-chain-parser
 ``` 
-**For which purposes the Ultimate Chain Parser can be used?**
+**For what purposes can the Ultimate Chain Parser be used?**
 
-- processing to standarized format (e.g. CSV) any data broken into inconsistent rows or columns
-- reparsing data according to a specific complex patterns
-- creating datasets easy-to-put in the database or to import into software like Excel.
-- complex text manipulation
-- ...and for many other tasks.
+- Processing any data broken into inconsistent rows or columns into a standardized format (e.g., CSV).
+- Re-parsing data according to specific complex patterns.
+- Creating datasets that are easy to insert into a database or import into software like Excel.
+- Performing complex text manipulation.
+- ...and many other tasks.
 
 ## Live Demo: https://szczyglis.dev/ultimate-chain-parser
 
 ![parser2](https://user-images.githubusercontent.com/61396542/164573563-e034b324-37e2-4742-a120-fd8a90324708.png)
 
-# Features:
+# Features
 
-- reparsing bad-arranged data into structured clean datasets, e.g. CSV  
-- parsing bad-arranged or broken data copied from websites, Word documents or PDFs  
-- running pre-configured tools (plugins) in the chain
-- complex manipulation on text data
-- complex data parsing using programmable regular expressions run one after another in a defined sequence
-- easy to use and powerful configuration system
-- the flow of action based on the splitting into smaller separate tools, each of which performs a different batch of tasks in cooperation with the rest
-- tools included in the package that can work separately or together: parser, cleaner, limiter and replacer
-- modular structure based on the plug-in system, in addition, each element of the application can be extended or completely replaced with a self-created one - each element of the application has its own interface for the programmer that allows for any extension of functionality or replacement of existing ones
-- multiple extendable components: configuration providers, input data readers, data parsers, renderers, loggers, etc.
-- HTML/Ajax based configurator application included - you can test and configure the chain in real-time
-- command line tool included
-- easy to integrate with modern frameworks (like Symfony)
-
+- Re-parsing poorly arranged data into structured, clean datasets (e.g., CSV)
+- Parsing poorly arranged or broken data copied from websites, Word documents, or PDFs
+- Running pre-configured tools (plugins) in a sequence
+- Performing complex text data manipulations
+- Parsing complex data using programmable regular expressions executed in a defined sequence
+- Featuring an easy-to-use and powerful configuration system
+- Executing actions through splitting tasks into smaller, separate tools, each performing a different batch of tasks in cooperation with the rest
+- Including tools that can work separately or together: parser, cleaner, limiter, and replacer
+- Offering a modular structure based on a plug-in system, with each element extendable or replaceable by custom implementations; every component has its own interface for extending functionality or replacing existing ones
+- Providing multiple extendable components: configuration providers, input data readers, data parsers, renderers, loggers, etc.
+- Including an HTML/AJAX-based configurator application for real-time testing and configuration
+- Featuring a command-line tool for ease of use
+- Easy integration with modern frameworks like Symfony
 
 # Requirements:
 
-  - PHP 7.2.5+
+  - PHP 7.2.5+ or PHP 8.0+
   - Composer - https://getcomposer.org/
 
+# Example of an Action
 
-# An example of an action:
-
-Sample text data that requires processing:
+**Sample text data that requires processing:**
 
 ```
 123
@@ -69,8 +66,7 @@ same director
 
 ```
 
-**Ugly, right? Ultimate Chain Parser can transform such inconsistently arranged data into a structured format like CSV, JSON, raw PHP array and any other schema defined easily by user:**
-
+**Ugly, right? The Ultimate Chain Parser can transform such inconsistently arranged data into a structured format such as CSV, JSON, raw PHP array, or any other schema easily defined by the user:**
 ```
 123,terminator,schwarzenegger,action movie very good
 456,titanic,dicaprio,same director
@@ -95,25 +91,24 @@ same director
 ]
 ```
 
-The above CSV and JSON data has been generated completely automatically using only a few configuration options given in the parser input. The main concept behind the operation is to run a set of processing tools (called Plugins) in a chain. Each successively started process accesses the output from the previous process in the chain. Each of these chain elements can be freely configured with different options. Configuration can be done in many ways by running Chain Parser directly from your code, loading configuration from an external file and running from command line, or completely live using the Ajax web form-based configurator included in the package. Ultimate Chain Parser can also directly return a ready (not parsed) dataset prepared from analyzed data (in the form of a PHP array or JSON data).
+The above CSV and JSON data has been generated completely automatically using only a few configuration options provided in the parser input. The main concept behind the operation is to run a set of processing tools (called Plugins) in a chain. Each successively started process accesses the output from the previous process in the chain. Each of these chain elements can be freely configured with different options. Configuration can be done in many ways: by running Chain Parser directly from your code, loading configuration from an external file and running from the command line, or completely live using the Ajax web form-based configurator included in the package. Ultimate Chain Parser can also directly return a ready (not parsed) dataset prepared from analyzed data (in the form of a PHP array or JSON data).
 
+# Installation
 
-# Installation:
-
-**Composer / packagist:**
+**Composer / packagist**
 
 ```
 composer require szczyglis/ultimate-chain-parser
 ``` 
 
-**Manual installation:**
+**Manual installation**
 
-  - download zip package and extract it.
-  - run `composer install` in project directory to install dependencies
-  - include composer autoloader in your application and instatiate ChainParser object.
+- Download the zip package and extract it.
+- Run `composer install` in the project directory to install dependencies.
+- Include the Composer autoloader in your application and instantiate the `ChainParser` object.
 
 
-# Example of use:
+# Example of use
 
 ```php
   <?php
@@ -139,13 +134,13 @@ composer require szczyglis/ultimate-chain-parser
   echo $result;
 ```
 
-## Live example:
+## Live example
 
-Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **example.php** included in package to open AJAX-based demo with chain configurator in real-time mode. On the page that you see on the screen, you will see the options described - each of them you will be able to use when manually configuring the chain:
+Go to https://szczyglis.dev/ultimate-chain-parser to run the online demo, or run **example.php** included in the package to open the AJAX-based demo with the chain configurator in real-time mode. On the page that you see on the screen, you will find the described options, each of which you will be able to use when manually configuring the chain:
 
-### Adding elements to chain:
+### Adding Elements to the Chain
 
-**Manualy adding elements to chain is very easy:**
+**Manually adding elements to the chain is very easy:**
 
 ```php
   $parser = new ChainParser();  
@@ -162,12 +157,9 @@ Go to https://szczyglis.dev/ultimate-chain-parser and run online demo or run **e
   
   $parser->run();
 ```
-The above code adds 3 new elements (iterations) with defined tools (named Plugins) to the chain.
-Each of these elements will operate on the output of the previous element.
-The options are passed as the second argument, wrapped in the option provider class. You can combine the elements in any order and amount until you get the result you want.
+The above code adds 3 new elements with defined tools (called Plugins) to the chain. Each of these elements will operate on the output of the previous element. The options are passed as the second argument, wrapped in the option provider class. You can combine the elements in any order and quantity until you achieve the desired result.
 
-**Elements do not have to be added manually as above. For this purpose, you can use a predefined, prepared configuration that will build the defined chain itself in a completely programmatic way.**
-
+**Elements do not have to be added manually as described above. You can use a predefined configuration to programmatically build the defined chain automatically.**
 
 ## Configuration, options and usage
 
@@ -201,7 +193,7 @@ The main tool of the application, used to parse data according to specific patte
       ],
     ];
 ```
-**- regex_ignore_before** - `array` A list of regular expressions that, if matched( before apply "replace_filter_before"), will skip the matched data block. Is used to ignore blocks matching the given pattern. You can enter many, in text form each expression on a new line, or directly in the array.
+**- regex_ignore_before** - `array` A list of regular expressions that, if matched (before apply "replace_filter_before"), will skip the matched data block. Is used to ignore blocks matching the given pattern. You can enter many, in text form each expression on a new line, or directly in the array.
 
   *Syntax:* /REGEX/ (per line)
 
@@ -392,7 +384,7 @@ ___
 
 ## Tool: cleaner
 
-A tool for cleaning the input data, sanitizing and pre-preparing data for further processing
+A tool for cleaning the input data, sanitizing and pre-preparing data for further processing.
 
 **Options:**
 
@@ -412,7 +404,6 @@ A tool for cleaning the input data, sanitizing and pre-preparing data for furthe
 
 **- sep_input_column** - `string` Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
 
-
 **- sep_output_rowset** - `string` Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
 
 **- sep_output_row** - `string` Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
@@ -424,7 +415,7 @@ ___
 
 ## Tool: limiter
 
-A tool for limiting the amount of generated or received data according to specific patterns and rules, it can be used to delete data also.
+A tool for limiting the amount of generated or received data according to specific patterns and rules; it can also be used to delete data.
 
 **Options:**
 
@@ -614,10 +605,9 @@ A tool for converting specific batches of data to others according to specific p
 **- sep_output_column** - `string` Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
 ___
 
-# Running in command line (PHP CLI):
+# Running in command line (PHP CLI)
 
-Package includes symfony command in `Command` directory.
-You can run the command with the script cmd.php:
+The package includes a Symfony command in the `Command` directory. You can run the command with the script `cmd.php`:
 
 **Usage in CLI:**
 
@@ -627,9 +617,9 @@ You can run the command with the script cmd.php:
 
 **Arguments:**
 
-  /path/to/data = path to file with text data to parse.
-  
-  /path/to/config.yaml = path to file with Yaml config.
+`/path/to/data` - path to the file with text data to parse.
+
+`/path/to/config.yaml` - path to the file with the YAML config.
 
 **Options:**
 
@@ -637,25 +627,25 @@ You can run the command with the script cmd.php:
 
   --data=0  - disable raw data output
 
-Package contains 2 example files:
+The package contains 2 example files:
 
   - example.txt
 
   - example.yaml
 
-You can use this example files for test:
+You can use these example files for testing:
 
   ```
   ./cmd.php chainparser ./example.txt ./example.yaml
   ```
 
-Disable log and data output (it leaves only parse result output):
+Disable log and data output (this leaves only the parse result output):
 
   ```
   ./cmd.php chainparser ./example.txt ./example.yaml --log=0 --data=0
   ```
 
-Store output result to file (output.txt):
+Store the output result in a file (output.txt):
 
   ```
   ./cmd.php chainparser ./example.txt ./example.yaml --log=0 --data=0 > output.txt
@@ -664,14 +654,13 @@ Store output result to file (output.txt):
 
 # Config options
 
-You can use included config provider or write your own.
-At this moment, 2 config providers are included:
+You can use the included config provider or write your own. At this moment, two config providers are included:
 
-**ArrayConfig** - works on the configuration provided directly from PHP array
+**ArrayConfig** - works with the configuration provided directly from a PHP array
 
-**YamlConfig** - works on the configuration readed from the YAML file
+**YamlConfig** - works with the configuration read from a YAML file
 
-### Usage:
+### Usage
 ```php  
 <?php
 
@@ -699,7 +688,7 @@ $parser->setConfig(new ArrayConfig([
 ]));
 ```
 
-### Available configuration options:
+### Available configuration options
 
 **- full_output** -- `boolean`, default: false, if true then all outputs from all chain elements are rendered at output, if false then only last result is rendered
 
@@ -711,17 +700,16 @@ $parser->setConfig(new ArrayConfig([
 
 # Loggers
 
-You can use included Loggers or write your own.
-The package includes 3 different Loggers:
+You can use the included loggers or write your own. The package includes three different loggers:
 
-**ArrayLogger**  -- logs everything to PHP array
+**ArrayLogger** — logs everything to a PHP array
 
-**ConsoleLogger** -- logs output to CLI console
+**ConsoleLogger** — logs output to the CLI console
 
-**PsrLogger** -- stores logs in file using Monolog Logger
+**PsrLogger** — stores logs in a file using Monolog Logger
 
 
-### Usage:
+### Usage
 ```php
 <?php
 
@@ -740,7 +728,7 @@ $parser->addLogger(new ConsoleLogger());
 
 ```
 
-You can register multiple Loggers at once, the output will be sent to all of them at once.
+You can register multiple loggers at once; the output will be sent to all of them simultaneously.
 
 Accessing the generated logs is very simple:
 
@@ -752,7 +740,7 @@ $log = $parser->renderLog();
 
 dump($log);
 ```
-Or if you want get raw (not rendered/parsed) log data, use:
+Or if you want to get raw (not rendered/parsed) log data, use:
 ```php
 $parser->run();
 
@@ -763,7 +751,7 @@ dump($log);
 
 ___
 
-# Extending Chain Parser:
+# Extending Chain Parser
 
 The concept is based on fully modularity and extending the package with its own parsers and features.
 Each element can be adapted to your needs and to solve your problems.
@@ -771,24 +759,22 @@ Each element can be adapted to your needs and to solve your problems.
 
 ## Configuration providers
 
-Configuration providers are responsible for reading and parsing the configuration.
-There are a few base configuration providers included in the package, but you can create yours very easily.
+Configuration providers are responsible for reading and parsing the configuration. There are a few base configuration providers included in the package, but you can easily create your own.
 
 Configuration providers are located in: `Szczyglis\ChainParser\Config` namespace.
 
-### Included configuration providers:
+### Included configuration providers
 
-**ArrayConfig** - reads configuration from array passed as constructor argument
+**ArrayConfig** - reads configuration from an array passed as a constructor argument
 
-**YamlConfig** - reads configuration from Yaml file (path to file needs to be passed as constructor argument)
-
-### How to create your own configuration provider:
+**YamlConfig** - reads configuration from a YAML file (path to the file needs to be passed as a constructor argument)
+### How to create your own configuration provider
 
 - implement interface `Szczyglis\ChainParser\Contract\ConfigInterface`
 - attach your config provider using the `setConfig()` method
 
 
-### Example:
+### Example
 
 ```php  
 <?php
@@ -859,25 +845,24 @@ ___
 
 ## Input data providers
 
-Input data providers are responsible for reading input data.
-There are a few base input data providers included in the package, but you can create yours very easily.
+Input data providers are responsible for reading input data. There are a few base input data providers included in the package, but you can easily create your own.
 
 Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
 
-### Included input data providers:
+### Included input data providers
 
-**TextInput** - reads input data directly from string passed as constructor argument
+**TextInput** - reads input data directly from a string passed as a constructor argument
 
-**FileInput** - reads input data from file (path to file needs to be passed in constructor argument)
+**FileInput** - reads input data from a file (path to the file needs to be passed as a constructor argument)
 
-### How to create your own input data provider:
+### How to create your own input data provider
 
-- implement interface `Szczyglis\ChainParser\Contract\InputInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractInput`
+- implement the interface `Szczyglis\ChainParser\Contract\InputInterface`
+- optionally extend the abstract helper class `Szczyglis\ChainParser\Helper\AbstractInput`
 - attach your input data provider using the `setInput()` method
 
 
-### Example:
+### Example
 
 ```php  
 <?php
@@ -932,27 +917,26 @@ ___
 
 ## Loggers
 
-Loggers are responsible for logging data from plugins.
-There are a few base loggers included in the package, but you can create yours very easily.
+Loggers are responsible for logging data from plugins. There are a few base loggers included in the package, but you can easily create your own.
 
-Loggers are located in: `Szczyglis\ChainParser\Logger` namespace.
+Loggers are located in the `Szczyglis\ChainParser\Logger` namespace.
 
-### Included loggers:
+### Included loggers
 
-**ArrayLogger** - writes logs directly to the array
+**ArrayLogger** - writes logs directly to an array
 
-**PsrLogger** - writes logs into file using Monolog
+**PsrLogger** - writes logs to a file using Monolog
 
 **ConsoleLogger** - displays logs directly to the console
 
-### How to create your own logger:
+### How to create your own logger
 
-- implement interface `Szczyglis\ChainParser\Contract\LoggerInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractLogger`
-- add logger using the `addLogger()` method
+- implement the interface `Szczyglis\ChainParser\Contract\LoggerInterface`
+- optionally extend the abstract helper class `Szczyglis\ChainParser\Helper\AbstractLogger`
+- add a logger using the `addLogger()` method
 
 
-### Example:
+### Example
 
 ```php  
 <?php
@@ -998,25 +982,23 @@ ___
 
 ## Options providers
 
-Options providers are responsible for reading, parsing and serving plugin's options.
-There are a few base options providers included in the package, but you can create yours very easily.
+Options providers are responsible for reading, parsing, and serving the plugin's options. There are a few base options providers included in the package, but you can easily create your own.
 
-Options provider are located in: `Szczyglis\ChainParser\Options` namespace.
+Options providers are located in the `Szczyglis\ChainParser\Options` namespace.
 
-### Included options providers:
+### Included options providers
 
-**ArrayOptions** - reads options directly from array passed as constructor argument
+**ArrayOptions** - reads options directly from an array passed as a constructor argument
 
-**FormOptions** - parses options passed as text or from html form
+**FormOptions** - parses options passed as text or from an HTML form
 
-### How to create your own options provider:
+### How to create your own options provider
 
-- implement interface `Szczyglis\ChainParser\Contract\OptionsInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractOptions`
-- initialize plugin using your own options provider
+- implement the interface `Szczyglis\ChainParser\Contract\OptionsInterface`
+- optionally extend the abstract helper class `Szczyglis\ChainParser\Helper\AbstractOptions`
+- initialize the plugin using your own options provider
 
-
-### Example:
+### Example
 
 ```php  
 <?php
@@ -1081,25 +1063,25 @@ ___
 
 ## Option resolvers
 
-Option resolvers are responsible for parsing options, e.g. when options are given using a HTML form and need to be parsed into an array. There are a few base option resolvers included in the package, but you can create yours very easily.
+Option resolvers are responsible for parsing options, e.g., when options are provided using an HTML form and need to be parsed into an array. There are a few base option resolvers included in the package, but you can easily create your own.
 
-Option resolvers are located in: `Szczyglis\ChainParser\OptionResolver` namespace.
+Option resolvers are located in the `Szczyglis\ChainParser\OptionResolver` namespace.
 
-### Included options resolvers:
+### Included options resolvers
 
-  **SingleLineResolver** - parses options from single line
+**SingleLineResolver** - parses options from a single line
 
-  **MultiLineResolver** - parses more complex syntax from multilines
+**MultiLineResolver** - parses more complex syntax from multiple lines
 
-  **RangeResolver** - parses range-based options, eg. 1,2,8-10
+**RangeResolver** - parses range-based options, e.g., 1,2,8-10
 
-### How to create your own option resolver, e.g. for use with own plugin configuration:
+### How to create your own option resolver, e.g. for use with own plugin configuration
 
-- implement interface `Szczyglis\ChainParser\Contract\OptionResolverInterface`
-- register option resolver using `addResolver()` method
+- implement the interface `Szczyglis\ChainParser\Contract\OptionResolverInterface`
+- register the option resolver using `addResolver()` method
 
 
-### Example:
+### Example
 
 ``` php
 <?php
@@ -1175,31 +1157,28 @@ ___
 
 ## Plugins
 
-Plugins are the core of the application.
-They are tools that run along the chain and operates on data.
-Each plugin can work with the raw input and output from the previous plugin made in the chain.
-There are also special classes called `Workers` that help you organize your code and break it down into different "subprocesses". Workers share the same data set as the main plugin, they can also quickly exchange their data with the plugin. You can easily register your own workers using the `registerWorker` method.
+Plugins are the core of the application. They are tools that run along the chain and operate on data. Each plugin can work with the raw input and the output from the previous plugin in the chain. There are also special classes called `Workers` that help you organize your code and break it down into different "subprocesses." Workers share the same data set as the main plugin and can quickly exchange their data with the plugin. You can easily register your own workers using the `registerWorker` method.
 
-Plugins are located in `Szczyglis\ChainParser\Plugin` namespace.
+Plugins are located in the `Szczyglis\ChainParser\Plugin` namespace.
 
-### Included plugins:
+### Included plugins
 
 **Parser** - The main tool of the application, used to parse data according to specific patterns and rules.
 
-**Cleaner** - A tool for cleaning the input data, sanitizing and pre-preparing data for further processing
+**Cleaner** - A tool for cleaning the input data, sanitizing and pre-preparing data for further processing.
 
 **Limiter** - A tool for limiting and removing the amount of generated or received data according to specific patterns and rules.
 
-**Replacer** - A tool for converting specific batches of data to others according to specific patterns and rules.
+**Replacer** - A tool for converting specific batches of data to other formats according to specific patterns and rules.
 
-### How to create your own plugin:
+### How to create your own plugin
 
-- implement interface `Szczyglis\ChainParser\Contract\PluginInterface`
-- extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractPlugin`
-- add a plugin to the chain
+- implement the interface `Szczyglis\ChainParser\Contract\PluginInterface`
+- extend the abstract helper class `Szczyglis\ChainParser\Helper\AbstractPlugin`
+- add the plugin to the chain
 
 
-### Example:
+### Example
 ```php
 <?php
 
@@ -1256,7 +1235,7 @@ echo $parser->renderOutput(); // returns "Hello foo"
 
 ``` 
 
-### Creating own Worker:
+### Creating own Worker
 ```php
 <?php
 
@@ -1319,15 +1298,14 @@ class MyPlugin extends AbstractPlugin implements PluginInterface, LoggableInterf
 }
 ```
 
-Worker is registered and initiated automatically as soon as it is given in the `registerWorkers()` method. As the example above showed - Workers and Plugins have a common container for temporary data used to exchange variables between the Plugin and the Worker:
-
+A worker is registered and initiated automatically as soon as it is given in the `registerWorkers()` method. As the example above showed, workers and plugins have a common container for temporary data used to exchange variables between the plugin and the worker:
 ```php
 $this->setVar('foo', $bar); // sets var foo 
 $foo = $this->getVar('foo'); // gets var foo
 ```
 
 
-### Access to input and output data from the plug-in and worker level is as follows:
+### Access to input and output data from the plugin and worker level is as follows:
 
 ```php
 <?php
@@ -1382,9 +1360,7 @@ public function run(): bool
 
 ### Helpers inside Plugin and Worker
 
-You can use some included helpers providing by AbstractPlugin and AbstractWorker abstract classes. 
-When you extend your class from them then you have access to some useful methods:
-
+You can use some included helpers provided by the `AbstractPlugin` and `AbstractWorker` abstract classes. When you extend your class from them, you have access to some useful methods:
 
 `$this->isPattern($pattern): bool` -- checks if $pattern is valid regex pattern
 
@@ -1418,14 +1394,11 @@ When you extend your class from them then you have access to some useful methods
 ```
 Doing this will cause the character A to be replaced with the character B for each element in the dataset.
 
+**It is a good idea to check the code of the plugins included in the package to see live examples.**
 
-**It it good idea to check code of plugins included in the package to see live examples.**
+### Registering options that require prior parsing
 
-
-### Registering options that require prior parsing:
-
-If you need to use options that require the data to be parsed first, e.g. into an `array`, use ready-made Option Resolvers, or create your own Resolver. To register an option in the appropriate Option Resolvers, return its name in the array using the registerOptions() method. From now on, it will be parsed by the assigned Resolver. The array should include the name of the Resolver and a list of options assigned to it. Example of use:
-
+If you need to use options that require the data to be parsed first, e.g., into an `array`, use ready-made option resolvers or create your own resolver. To register an option with the appropriate option resolver, return its name in the array using the `registerOptions()` method. From now on, it will be parsed by the assigned resolver. The array should include the name of the resolver and a list of options assigned to it. Example of use:
 
 ```php
 <?php
@@ -1453,23 +1426,22 @@ public function registerOptions(): array
 }
 ```
 
-Built-in resolvers:
+Included resolvers:
 
-**singleline** - parses single line parameters, like "key: value => assignement/replacement"
+**singleline** - parses single-line parameters, like "key: value => assignment/replacement"
 
-**multiline** - parses multiline line parameters, like "key: value => assignement/replacement places in many lines"
+**multiline** - parses multi-line line parameters, like "key: value => assignment/replacement places in many lines"
 
 **range** - parses range parameters, like: "1,5,10-20,15-,-80"
 
 
-### Logging messages:
+### Logging messages
 
 From the Plugin and Worker level, you have access to log events using registered loggers. The `$this->log()` method is used for this. To use event logging, you must implement the following interfaces:
-
 - in plugin: `Szczyglis\ChainParser\Contract\LoggableInterface`;
 - in worker: `Szczyglis\ChainParser\Contract\LoggableWorkerInterface`;
 
-#### Example of use:
+#### Example of use
 
 ```php
 <?php
@@ -1519,25 +1491,24 @@ ___
 
 ## Renderer
 
-Renderers are responsible for displaying the output.
-There are a few base renderers included in the package, but you can create yours very easily.
+Renderers are responsible for displaying the output. There are a few base renderers included in the package, but you can easily create your own.
 
-Renderers are located in `Szczyglis\ChainParser\Renderer` namespace.
+Renderers are located in the `Szczyglis\ChainParser\Renderer` namespace.
 
-### Included renderers:
+### Included renderers
 
-**TextRenderer** - parses output into txt/html format
+**TextRenderer** - parses output into TXT/HTML format
 
-**ConsoleRenderer** - sends output to console
+**ConsoleRenderer** - sends output to the console
 
-### How to create your own renderer:
+### How to create your own renderer
 
-- implement interface `Szczyglis\ChainParser\Contract\RendererInterface`
-- optionally extend abstract helper class `Szczyglis\ChainParser\Helper\AbstractRenderer`
-- set renderer using `setRenderer()` method
+- implement the interface `Szczyglis\ChainParser\Contract\RendererInterface`
+- optionally extend the abstract helper class `Szczyglis\ChainParser\Helper\AbstractRenderer`
+- set the renderer using `setRenderer()` method
 
 
-### Example:
+### Example
 
 ```php  
 <?php
@@ -1602,8 +1573,7 @@ $parser->renderLog(); // will display dumped output from your renderer
 
 ## Exporting configuration
 
-You can export the currently running configuration at any time, including the entire chain and its options.
-To do this, use the config generator:
+You can export the currently running configuration at any time, including the entire chain and its options. To do this, use the config generator:
 
 ```php
 <?php
@@ -1628,7 +1598,6 @@ dump($myConfig); // displays configuration in Yaml format
 ```
 
 You can reuse an exported and saved configuration by loading it with the configuration loader `Szczyglis\ChainParser\Config\YamlConfig`.
-
 ___
 
 ## Live Demo: https://szczyglis.dev/ultimate-chain-parser
@@ -1637,15 +1606,18 @@ ___
 
 
 # Changelog
-**- 1.0.0** - Published first release. (2022-04-22)
 
-**- 1.0.4** - Increased limit if demo mode, documentation fixes. (2022-04-22)
+**1.0.0** - Published first release. (2022-04-22)
 
-**- 1.2.6** - Full dataset sharing added, eraser and splitter plugins are removed (their role is taken over by limiter), added configuration of dataset looks by freely specifying each separator for each dimension (rowset, row, column).  (2022-04-23)
+**1.0.4** - Increased limit in demo mode, documentation fixes. (2022-04-22)
 
-**- 1.2.10** - Updated PHPDoc, updated example config yaml (2022-04-25)
+**1.2.6** - Full dataset sharing added, eraser and splitter plugins removed (their role is taken over by limiter), added configuration of dataset looks by freely specifying each separator for each dimension (rowset, row, column). (2022-04-23)
 
-**- 1.2.11** - Updated composer.json (2022-04-28)
+**1.2.10** - Updated PHPDoc, updated example config YAML. (2022-04-25)
+
+**1.2.11** - Updated composer.json. (2022-04-28)
+
+**1.2.12** - Improved documentation (2024-08-26)
 
 --- 
 **Ultimate Chain Parser is free to use, but if you like it, you can support my work by buying me a coffee ;)**
