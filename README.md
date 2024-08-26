@@ -1,9 +1,10 @@
-Release: **1.2.12** | build: **2024.08.26** | PHP: **^7.2.5|^8.0**
+Release: **1.2.13** | build: **2024.08.26** | PHP: **^7.2.5|^8.0**
 
 # Ultimate Chain Parser - advanced chain-flow-based parser
 
-**"Ultimate Chain Parser" is a modular package designed for chain processing of text data, converting it into structured output.**
+**Ultimate Chain Parser is a modular package designed for chain processing of text data, converting it into structured output.**
 The application concept is based on processing data in successive iterations using configurable data processing modules. Each module in the execution chain sequentially accesses the output of the preceding module and uses it as input.
+
 ## How to install
 ```
 composer require szczyglis/ultimate-chain-parser
@@ -169,9 +170,9 @@ The main tool of the application, used to parse data according to specific patte
 
 **Options:**
 
-**- use_dataset** - `boolean` Enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
+**- use_dataset** - `boolean` Enables operation on a dataset prepared by the previous element, instead of its parsed output. This allows transferring an already prepared set of data between elements. Do not use this in the first element of the chain when starting from raw input, as there is no prepared dataset from a previous element at the beginning.
 
-**- regex_match** - `array` A set of regular expressions to match the data found with the corresponding fields. You can add more than one pattern for each field, if more are given, it is enough that one of them is matched (the logical OR operation is performed). The option can be given in text (a separate field on a separate line), or directly in the array.
+**- regex_match** - `array` A set of regular expressions to match the data with the corresponding fields. You can add multiple patterns for each field; if more than one pattern is provided, only one needs to match (the logical OR operation is performed). This option can be specified in text (one field per line) or directly in a PHP array.
 
   *Syntax:* FIELDNAME:/REGEX/ (per line)
 
@@ -193,7 +194,7 @@ The main tool of the application, used to parse data according to specific patte
       ],
     ];
 ```
-**- regex_ignore_before** - `array` A list of regular expressions that, if matched (before apply "replace_filter_before"), will skip the matched data block. Is used to ignore blocks matching the given pattern. You can enter many, in text form each expression on a new line, or directly in the array.
+**- regex_ignore_before** - `array` A list of regular expressions that, if matched (before applying "replace_filter_before"), will skip the matched data block. This is used to ignore blocks matching the given pattern. You can enter multiple expressions, either in text form with each expression on a new line, or directly in a PHP array.
 
   *Syntax:* /REGEX/ (per line)
 
@@ -209,7 +210,7 @@ The main tool of the application, used to parse data according to specific patte
       1 => '/^some unwanted data/',
     ];
   ```
-**- regex_ignore_after** - `array` A list of regular expressions that, if matched (after apply "replace_filter_before"), will skip the matched data block. Is used to ignore blocks matching the given pattern. You can enter many, in text form each expression on a new line, or directly in the array.
+**- regex_ignore_after** - `array` A list of regular expressions that, if matched (after applying "replace_filter_before"), will skip the matched data block. This is used to ignore blocks matching the given pattern. You can enter multiple expressions, either in text form with each expression on a new line, or directly in a PHP array.
 
   *Syntax*: /REGEX/ (per line)
 
@@ -225,7 +226,7 @@ The main tool of the application, used to parse data according to specific patte
       1 => '/^some unwanted data/',
     ];
   ```
-**- replace_field_before** - `array` A list of regular expressions used to replace or precondition a data block with another, run before each attempt to match a given field. Can be used to pre-filter the data before each match attempt. You can enter many, in text form each expression on a new line, or directly in the array.
+**- replace_field_before** - `array` A list of regular expressions used to replace or precondition a data block with another, applied before each attempt to match a given field. This can be used to pre-filter the data before each match attempt. You can enter multiple expressions, either in text form with each expression on a new line, or directly in a PHP array.
 
   *Syntax:* FIELDNAME:/REGEX/ => "REPLACED STRING" (one pattern per line)
 
@@ -256,7 +257,7 @@ The main tool of the application, used to parse data according to specific patte
       ],
     ];
   ``` 
-**- replace_field_after** - `array` A list of regular expressions to replace an already matched field with another text string. It can be used for post-processing of already matched fields. You can enter many, in text form each expression on a new line, or directly in the array.
+**- replace_field_after** - `array` A list of regular expressions to replace an already matched field with another text string. This can be used for post-processing of matched fields. You can enter multiple expressions, either in text form with each expression on a new line, or directly in a PHP array.
 
   *Syntax:* FIELDNAME:/REGEX/ => "REPLACED STRING" (one pattern per line)
 
@@ -282,7 +283,7 @@ The main tool of the application, used to parse data according to specific patte
       ],
     ];
 ```
-**- replace_block_before** - `array` A list of regular expressions to replace or pre-prepare a data block with another, run over the entire data block before trying to match. Can be used to pre-filter the data before each match attempt. You can enter many, in text form each expression on a new line, or directly in the array.
+**- replace_block_before** - `array` A list of regular expressions to replace or pre-prepare a data block with another, applied to the entire data block before attempting to match. This can be used to pre-filter the data before each match attempt. You can enter multiple expressions, either in text form with each expression on a new line, or directly in a PHP array.
   
   *Syntax:* /REGEX/ => "REPLACED STRING" (one pattern per line).
 
@@ -304,7 +305,7 @@ The main tool of the application, used to parse data according to specific patte
       ],
     ];
 ```
-**- replace_block_after** - `array` A list of regular expressions to replace an already matched block with another text string. Run for the entire block of data after a match is made. Can be used for post-processing of already matched data. You can enter many, in text form each expression on a new line, or directly in the array.
+**- replace_block_after** - `array` A list of regular expressions to replace an already matched block with another text string. Applied to the entire block of data after a match is made, this can be used for post-processing of matched data. You can enter multiple expressions, either in text form with each expression on a new line, or directly in a PHP array.
 
   *Syntax:* /REGEX/ => "REPLACED STRING" (one pattern per line)
 
@@ -326,7 +327,7 @@ The main tool of the application, used to parse data according to specific patte
       ],
     ];
 ```
-**- fields** - `array` A list of fields to be matched, enter here the names of the fields into which you want to divide the parsed data, e.g. id, name, actor, description. It should be entered in one line, separated by a comma (,), or as an array of fields.
+**- fields** - `array` A list of fields to be matched. Enter the names of the fields into which you want to divide the parsed data, e.g., id, name, actor, description. The fields should be entered on one line, separated by commas (,), or as an array of fields.
 
   *Syntax:* FIELDNAME1,FIELDNAME2,FIELDNAME3,FIELDNAME4...
 
@@ -343,7 +344,7 @@ The main tool of the application, used to parse data according to specific patte
       'description',
     ];
 ```
-**- output_fields** - `array` A list of fields to match from the list above to be displayed in the output, e.g. id, name, actor. It should be entered in one line, separated by a comma (,), or as an array of fields.
+**- output_fields** - `array` A list of fields to match from the list above to be displayed in the output, e.g., id, name, actor. The fields should be entered on one line, separated by commas (,), or as an array of fields.
 
   *Syntax:* FIELDNAME1,FIELDNAME2,FIELDNAME3,FIELDNAME4...
 
@@ -361,71 +362,70 @@ The main tool of the application, used to parse data according to specific patte
     ];
 
 ```
-**- sep_input_rowset** - `string` Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
 
-**- sep_input_row** - `string` Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+**- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
-**- sep_input_column** - `string` Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+**- sep_input_column** - `string` Separator for columns in input data when splitting into columns, used depending on the expected output distribution, e.g., a comma (,).
 
+**- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_rowset** - `string` Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
 
-**- sep_output_row** - `string` Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
 
-**- sep_output_column** - `string` Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
+**- empty_field_placeholder** - `string` Placeholder to replace the given field if the matched field is empty. Leave blank if you do not want to use any placeholders.
 
-**- empty_field_placeholder** - `string` Placeholder to replace the given field if the matched field is empty. Leave blank if you don't want to put any placeholders.
+**- is_debug** - `boolean`, If TRUE, append debugger information to each line of output.
 
-**- is_debug** - `boolean`, If TRUE, then append debugger information to each line of output
-
-**- is_empty_field_placeholder** - `boolean` If TRUE, then replaces empty spaces in the matched fields with the string specified in the `empty_placeholder` option
+**- is_empty_field_placeholder** - `boolean` If TRUE, replace empty spaces in the matched fields with the string specified in the `empty_placeholder` option.
 
 ___
 
 ## Tool: cleaner
 
-A tool for cleaning the input data, sanitizing and pre-preparing data for further processing.
+A tool for cleaning, sanitizing, and pre-preparing input data for further processing.
 
 **Options:**
 
-**- use_dataset** - `boolean`, Enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
+**- use_dataset** - `boolean`, Enables operation on a dataset prepared by the previous element, instead of its parsed output. This allows transferring an already prepared set of data between elements. Do not use this in the first element of the chain when starting from raw input, as there is no prepared dataset from a previous element at the beginning.
 
-**- trim** - `boolean` Applies function trim() to every block
+**- trim** - `boolean` Applies the `trim()` function to every block.
 
-**- clean_blocks** - `boolean` Removes empty blocks
+**- clean_blocks** - `boolean` Removes empty blocks.
 
-**- fix_newlines** - `boolean` Replaces all \r\n with \n
+**- fix_newlines** - `boolean` Replaces all \r\n with \n.
 
-**- strip_tags** - `boolean` Applies function strip_tags() to all
+**- strip_tags** - `boolean` Applies the `strip_tags()` function to all.
 
-**- sep_input_rowset** - `string` Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
 
-**- sep_input_row** - `string` Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+**- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
-**- sep_input_column** - `string` Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+**- sep_input_column** - `string` Separator for columns in input data when splitting into columns, used depending on the expected output distribution, e.g., a comma (,).
 
-**- sep_output_rowset** - `string` Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+**- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_row** - `string` Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
 
-**- sep_output_column** - `string` Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
 
 ___
 
 
 ## Tool: limiter
 
-A tool for limiting the amount of generated or received data according to specific patterns and rules; it can also be used to delete data.
+A tool for limiting the amount of generated or received data according to specific patterns and rules. It can also be used for deleting data.
 
 **Options:**
 
-**- use_dataset** - `boolean` Enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element)
+**- use_dataset** - `boolean` Enables operation on a dataset prepared by the previous element, instead of its parsed output. This allows transferring an already prepared set of data between elements. Do not use this in the first element of the chain when starting from raw input, as there is no prepared dataset from a previous element at the beginning.
 
-**- data_mode** - `string` `[rowset|row|column]` - Selects the dimension on which the other options are to operate
+**- data_mode** - `string` `[rowset|row|column]` - Selects the dimension on which the other options will operate.
 
-**- interval_allow** - `integer` Restricts output to blocks that match the given interval, default: 1
+**- interval_allow** - `integer` Restricts output to blocks that match the given interval. Default is 1.
 
-**- range_allow** - `array` Limits output to blocks that match specified ranges, leave empty to allow all blocks, or specify range(s) separated by coma, indexing is from 0
+**- range_allow** - `array` Limits output to blocks that match specified ranges; leave empty to allow all blocks. Specify range(s) separated by commas, with indexing starting from 0.
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
@@ -452,7 +452,7 @@ A tool for limiting the amount of generated or received data according to specif
       ],
     ];
   ```
-**- regex_allow** - `array` Restricts output to blocks that match the given regular expressions. You can enter a lot in new lines.
+**- regex_allow** - `array` Restricts output to blocks that match the given regular expressions. You can enter multiple expressions, each on a new line.
 
   *Syntax:* /REGEX/ (per line)
 
@@ -469,8 +469,8 @@ A tool for limiting the amount of generated or received data according to specif
     ];
 
   ```
-**- interval_deny_** - `integer` Restricts output to blocks that do not match the given interval, default: 1
-**- range_deny_** - `array`, Limits blocks in output to blocks that do not match specified ranges, leave empty to allow all blocks, or specify range(s) separated by coma, indexing is from 0
+**- interval_deny_** - `integer` Restricts output to blocks that do not match the given interval. Default is 1.
+**- range_deny_** - `array`, Limits blocks in output to those that do not match specified ranges. Leave empty to allow all blocks, or specify range(s) separated by commas. Indexing starts from 0.
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
@@ -497,7 +497,7 @@ A tool for limiting the amount of generated or received data according to specif
       ],
     ];
   ```
-**- regex_deny** - `array` Restricts output to blocks that do not match the given regular expressions. You can enter a lot in new lines.
+**- regex_deny** - `array` Restricts output to blocks that do not match the given regular expressions. You can enter multiple expressions, each on a new line.
 
   *Syntax:* /REGEX/ (per line)
 
@@ -514,31 +514,30 @@ A tool for limiting the amount of generated or received data according to specif
     ];
 
   ```
-**- sep_input_rowset** - `string` Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
 
-**- sep_input_row** - `string` Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+**- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
-**- sep_input_column** - `string` Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+**- sep_input_column** - `string` Separator for columns in input data when splitting into columns, used depending on the expected output distribution, e.g., a comma (,).
 
+**- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_rowset** - `string` Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
 
-**- sep_output_row** - `string` Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
-
-**- sep_output_column** - `string` Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
 ___
 
 ## Tool: replacer
 
-A tool for converting specific batches of data to others according to specific patterns and rules.
+A tool for converting specific batches of data to other formats according to defined patterns and rules.
 
 **Options:**
 
-**- use_dataset** - `boolean` Enables operation on a dataset prepared by the previous element, instead of its parsed output, allows to transfer between elements an already ready set of prepared data. Don't use in first element of chain when starting from raw input (because at the beginning there is no prepared dataset from the previous element) 
+**- use_dataset** - `boolean` Enables operation on a dataset prepared by the previous element, instead of its parsed output. This allows transferring an already prepared set of data between elements. Do not use this in the first element of the chain when starting from raw input, as there is no prepared dataset from a previous element at the beginning.
 
-**- data_mode** - `string` `[rowset|row|column]` Selects the dimension on which the other options are to operate
+**- data_mode** - `string` `[rowset|row|column]` Selects the dimension on which the other options will operate.
 
-**- regex** - `array` Regular expressions to replace the appropriate strings. You can enter several patterns on new lines.
+**- regex** - `array` Regular expressions to replace the appropriate strings. You can enter multiple patterns, each on a new line.
 
   *Syntax:* /REGEX/ => "REPLACED STRING" (one pattern per line)
 
@@ -561,9 +560,9 @@ A tool for converting specific batches of data to others according to specific p
     ];
   ```
 
-**- interval** - `integer` Limits replacing only to a specific interval, default: 1
+**- interval** - `integer` Limits replacing to a specific interval. Default is 1.
 
-**- range** - `array` Limits blocks to replace to specified ranges, leave empty to replace all, or specify range(s) separated by coma, indexing is from 0
+**- range** - `array` Limits blocks to replace to specified ranges; leave empty to replace all blocks. Specify range(s) separated by commas. Indexing starts from 0.
 
   *Syntax:* integer1, integer2, integer3-integer4,integer5-,-integer6 [...]
 
@@ -591,18 +590,17 @@ A tool for converting specific batches of data to others according to specific p
     ];
   ```
 
-**- sep_input_rowset** - `string` Separator for rowsets for input when stripping into rowset, used depending on the expected output distribution, e.g. \n
+**- sep_input_rowset** - `string` Separator for rowsets for input when splitting into rowsets, used depending on the expected output distribution, e.g., \n
 
-**- sep_input_row** - `string` Row separator for input when stripping into rows, used depending on the expected output distribution, e.g. \n
+**- sep_input_row** - `string` Separator for rows in input data when splitting into rows, used depending on the expected output distribution, e.g., \n.
 
-**- sep_input_column** - `string` Separator for columns for input data when stripping into columns, used depending on the expected output distribution, e.g. coma (,)
+**- sep_input_column** - `string` Separator for columns in input data when splitting into columns, used depending on the expected output distribution, e.g., a comma (,).
 
+**- sep_output_rowset** - `string` Separator for rowsets in output when joining results from rowsets, used depending on the desired output format, e.g., \n.
 
-**- sep_output_rowset** - `string` Separator for rowsets for output when joining result from rowsets, used depending on the expected output look, e.g. \n
+**- sep_output_row** - `string` Separator for rows in output when joining results from rows, used depending on the desired output format, e.g. \n
 
-**- sep_output_row** - `string` Row separator for output when joining result from rows, used depending on the expected output look, e.g. \n
-
-**- sep_output_column** - `string` Separator for columns for output data when joining result from columns, used depending on the expected output look, e.g. coma (,)
+**- sep_output_column** - `string` Separator for columns in output when joining results from columns, used depending on the desired output format, e.g. comma (,)
 ___
 
 # Running in command line (PHP CLI)
@@ -639,13 +637,13 @@ You can use these example files for testing:
   ./cmd.php chainparser ./example.txt ./example.yaml
   ```
 
-Disable log and data output (this leaves only the parse result output):
+Disable log and data output, leaving only the parse result output:
 
   ```
   ./cmd.php chainparser ./example.txt ./example.yaml --log=0 --data=0
   ```
 
-Store the output result in a file (output.txt):
+Store the output result in a file named `output.txt`.
 
   ```
   ./cmd.php chainparser ./example.txt ./example.yaml --log=0 --data=0 > output.txt
@@ -654,7 +652,7 @@ Store the output result in a file (output.txt):
 
 # Config options
 
-You can use the included config provider or write your own. At this moment, two config providers are included:
+You can use the included config provider or write your own. Currently, two config providers are included:
 
 **ArrayConfig** - works with the configuration provided directly from a PHP array
 
@@ -690,12 +688,12 @@ $parser->setConfig(new ArrayConfig([
 
 ### Available configuration options
 
-**- full_output** -- `boolean`, default: false, if true then all outputs from all chain elements are rendered at output, if false then only last result is rendered
+**- full_output** -- `boolean`, default: false. If true, all outputs from all chain elements are rendered in the output. If false, only the last result is rendered.
 
-**- log_file** -- `string`, absolute path to logfile if using PsrLogger (Monolog)
+**- log_file** -- `string`, absolute path to the logfile if using PsrLogger (Monolog).
 
 
-**- no_log** -- bool, if true then disables logging
+**- no_log** -- bool, if true, logging is disabled.
 
 
 # Loggers
@@ -753,9 +751,8 @@ ___
 
 # Extending Chain Parser
 
-The concept is based on fully modularity and extending the package with its own parsers and features.
-Each element can be adapted to your needs and to solve your problems.
-
+The concept is based on full modularity, allowing you to extend the package with your own parsers and features. 
+Each element can be adapted to meet your needs and solve your specific problems.
 
 ## Configuration providers
 
@@ -765,12 +762,13 @@ Configuration providers are located in: `Szczyglis\ChainParser\Config` namespace
 
 ### Included configuration providers
 
-**ArrayConfig** - reads configuration from an array passed as a constructor argument
+**ArrayConfig** - reads configuration from a PHP array passed as a constructor argument
 
 **YamlConfig** - reads configuration from a YAML file (path to the file needs to be passed as a constructor argument)
+
 ### How to create your own configuration provider
 
-- implement interface `Szczyglis\ChainParser\Contract\ConfigInterface`
+- implement the interface `Szczyglis\ChainParser\Contract\ConfigInterface`
 - attach your config provider using the `setConfig()` method
 
 
@@ -851,7 +849,7 @@ Input data providers are located in: `Szczyglis\ChainParser\Input` namespace.
 
 ### Included input data providers
 
-**TextInput** - reads input data directly from a string passed as a constructor argument
+**TextInput** - reads input data directly from a text string passed as a constructor argument
 
 **FileInput** - reads input data from a file (path to the file needs to be passed as a constructor argument)
 
@@ -923,7 +921,7 @@ Loggers are located in the `Szczyglis\ChainParser\Logger` namespace.
 
 ### Included loggers
 
-**ArrayLogger** - writes logs directly to an array
+**ArrayLogger** - writes logs directly to a PHP array
 
 **PsrLogger** - writes logs to a file using Monolog
 
@@ -988,7 +986,7 @@ Options providers are located in the `Szczyglis\ChainParser\Options` namespace.
 
 ### Included options providers
 
-**ArrayOptions** - reads options directly from an array passed as a constructor argument
+**ArrayOptions** - reads options directly from a PHP array passed as a constructor argument
 
 **FormOptions** - parses options passed as text or from an HTML form
 
@@ -1362,29 +1360,29 @@ public function run(): bool
 
 You can use some included helpers provided by the `AbstractPlugin` and `AbstractWorker` abstract classes. When you extend your class from them, you have access to some useful methods:
 
-`$this->isPattern($pattern): bool` -- checks if $pattern is valid regex pattern
+`$this->isPattern($pattern): bool` -- checks if `$pattern` is a valid regex pattern.
 
-`$this->checkPatterns(array $patterns, string $string): bool` -- checks if at least one of the given regex patterns matches a string
+`$this->checkPatterns(array $patterns, string $string): bool` -- checks if at least one of the given regex patterns matches a string.
 
-`$this->applyPatterns(array $patterns, string $string): string` -- applies any replacement patterns to the given string
+`$this->applyPatterns(array $patterns, string $string): string` -- applies any replacement patterns to the given string.
 
-`$this->explode(string $separator, ?string $input): array` -- wrapper for explode(), allow exploding by regular expression as separator
+`$this->explode(string $separator, ?string $input): array` -- wrapper for `explode()`, allowing explosion using a regular expression as the separator.
 
-`$this->implode(string $joiner, array &$ary): string` -- wrapper for implode()
+`$this->implode(string $joiner, array &$ary): string` -- wrapper for `implode()`.
 
-`$this->strReplace($from, $to, $data): string` -- wrapper for str_replace()
+`$this->strReplace($from, $to, $data): string` -- wrapper for `str_replace()`.
 
-`$this->stripTags($data, $tags = null): string` -- wrapper for strip_tags()
+`$this->stripTags($data, $tags = null): string` -- wrapper for `strip_tags()`.
 
-`$this->trim($input): string` -- wrapper for trim()
+`$this->trim($input): string` -- wrapper for `trim()`.
 
-`$this->inRange(array $ranges, int $i): bool` -- checks if number matches given ranges
+`$this->inRange(array $ranges, int $i): bool` -- checks if a number matches the given ranges.
 
-`$this->makeDataset(?string $input, string $sepRowset, string $sepRow, string $sepCol): array` -- makes 3-dimensional dataset array from string input and given separators
+`$this->makeDataset(?string $input, string $sepRowset, string $sepRow, string $sepCol): array` -- converts a string input into a 3-dimensional dataset array using the given separators.
 
-`$this->packDataset(array $dataset, string $sepRowset, string $sepRow, string $sepCol): string` -- builds parsed result from dataset
+`$this->packDataset(array $dataset, string $sepRowset, string $sepRow, string $sepCol): string` -- builds a parsed result from the dataset.
 
-`$this->iterateDataset(array $dataset, callable $callback): array` -- applies callback on every block in dataset and returns modified by callback dataset, example:
+`$this->iterateDataset(array $dataset, callable $callback): array` -- applies a callback to every block in the dataset and returns the dataset modified by the callback. Example:
 
 ```php
 
@@ -1428,16 +1426,17 @@ public function registerOptions(): array
 
 Included resolvers:
 
-**singleline** - parses single-line parameters, like "key: value => assignment/replacement"
+**singleline** - parses single-line parameters, such as "key: value => assignment/replacement"
 
-**multiline** - parses multi-line line parameters, like "key: value => assignment/replacement places in many lines"
+**multiline** - parses multi-line line parameters, such as "key: value => assignment/replacement places in many lines"
 
-**range** - parses range parameters, like: "1,5,10-20,15-,-80"
+**range** - parses range parameters, such as: "1,5,10-20,15-,-80"
 
 
 ### Logging messages
 
-From the Plugin and Worker level, you have access to log events using registered loggers. The `$this->log()` method is used for this. To use event logging, you must implement the following interfaces:
+From the Plugin and Worker level, you have access to log events using registered loggers. The `$this->log()` method is used for this purpose. To use event logging, you must implement the following interfaces:
+
 - in plugin: `Szczyglis\ChainParser\Contract\LoggableInterface`;
 - in worker: `Szczyglis\ChainParser\Contract\LoggableWorkerInterface`;
 
@@ -1618,6 +1617,8 @@ ___
 **1.2.11** - Updated composer.json. (2022-04-28)
 
 **1.2.12** - Improved documentation (2024-08-26)
+
+**1.2.13** - Extended options description in docs and in the example app (2024-08-26)
 
 --- 
 **Ultimate Chain Parser is free to use, but if you like it, you can support my work by buying me a coffee ;)**
